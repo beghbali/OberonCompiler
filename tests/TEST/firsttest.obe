@@ -1,0 +1,14 @@
+PROCEDURE two () : INTEGER;
+BEGIN
+        RETURN 2;
+END two;
+
+PROGRAM main
+VAR a, b, c : INTEGER;
+BEGIN    
+	a := 99;
+        b := a + two();
+        IF (b > 100) THEN
+                WRITE b, NL;
+	END;
+END.

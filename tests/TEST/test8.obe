@@ -1,0 +1,34 @@
+PROCEDURE change2(a : INTEGER; VAR b : INTEGER);
+BEGIN
+	a := 200;
+	b := 200;
+END change2;
+
+PROCEDURE change(VAR a : INTEGER; b : INTEGER);
+VAR c : INTEGER;
+BEGIN
+	a := 100;
+	c := b;
+	change2(a,c);
+END change;
+
+
+PROGRAM main
+VAR a,b : INTEGER;
+VAR d : BOOLEAN;
+VAR c : INTEGER;
+BEGIN
+	a := 3;
+	b := 2;
+	c := b-a;
+	d := TRUE;
+	d := d;
+	WRITE a+b*2,NL;
+	WRITE c,NL;
+	WRITE TRUE,NL,FALSE,NL,d,NL,~d,NL;
+	WRITE "a before change = ", a, NL;
+	WRITE "b before change = ", b, NL;
+	change(a,b);
+	WRITE "a after change = ", a, NL;
+	WRITE "b after change = ", b, NL;
+END.

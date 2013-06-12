@@ -1,0 +1,21 @@
+TYPE t = ARRAY 10 OF INTEGER;
+VAR arr1 : t;
+PROGRAM main
+VAR arr2 : t;
+VAR i : INTEGER;
+BEGIN
+i := 0;
+WHILE i < 10 DO
+arr1[i] := 3;
+arr2[i] := 4;
+i := i+1;
+END;
+
+arr1 := arr2;
+i := 0;
+WHILE i < 10 DO
+WRITE arr1[i],"==";
+WRITE arr2[i],NL;
+i := i +1;
+END;
+END.

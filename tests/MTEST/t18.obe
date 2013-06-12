@@ -1,0 +1,21 @@
+
+
+VAR x :INTEGER;
+
+PROCEDURE P1( y: INTEGER );
+BEGIN
+	IF y = 0
+	THEN
+		RETURN
+	END;
+	WRITE "y = ", y, NL;
+	y := y - 1;
+	P1( y );
+END P1;
+
+PROGRAM P
+BEGIN
+
+x := 3;
+P1( x );
+END.

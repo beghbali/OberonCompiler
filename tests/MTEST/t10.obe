@@ -1,0 +1,61 @@
+VAR flag, a, b : BOOLEAN;
+	x, y ,z :INTEGER;
+PROGRAM P
+BEGIN
+
+x := 3;
+y := 2;
+z := x;
+
+a := TRUE;
+b := FALSE;
+
+flag := x < y;
+
+a := x > y;
+WRITE "false = ", flag, NL , " a should be true ", a, NL;
+
+
+flag := x > y;
+WRITE "true = ", flag, NL;
+
+flag := x <= z;
+WRITE "true = ", flag, NL;
+
+flag := x >= y;
+WRITE "true = ", flag, NL;
+
+flag := x = y;
+WRITE "false = ", flag, NL;
+
+
+flag := x # y;
+WRITE "true = ", flag, NL;
+
+
+flag :=  a & b ;
+WRITE "false = ", flag, NL;
+
+flag := a OR b;
+WRITE "true = ", flag, NL;
+
+flag := ~a ;
+WRITE "fasle = ", flag, NL;
+
+
+
+flag := ~((a & b) OR ( x > y)) ;
+WRITE "false = ", flag, NL;
+
+
+flag := (~(a & b)) OR ( x > y) ;
+WRITE "true = ", flag, NL;
+
+
+IF ( (~( a & b )) & ( (x>y)))
+	THEN	
+	WRITE " In the loop ",2, NL;
+END;
+
+
+END.

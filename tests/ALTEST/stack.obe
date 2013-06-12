@@ -1,0 +1,69 @@
+TYPE element = POINTER TO RECORD
+    value : INTEGER;
+END;
+
+TYPE stack = POINTER TO RECORD
+    stackArray : ARRAY 100 OF element;
+    size : INTEGER;
+END;
+
+PROCEDURE (this : stack) init();
+BEGIN
+    this.size := 0;
+END init;
+
+PROCEDURE (this : stack) push(pushed : element);
+BEGIN
+    this.stackArray[this.size] := pushed;
+    this.size := this.size + 1;
+END push;
+
+PROCEDURE (this : stack) pop() : element;
+    VAR retVal : element;
+BEGIN
+    IF (this.size = 0) THEN
+        RETURN NIL;
+    ELSE
+        retVal := this.stackArray[this.size - 1];
+        this.stackArray[this.size - 1] := NIL;
+        this.size := this.size - 1;
+    END;
+    RETURN retVal;
+END pop;
+
+PROCEDURE (this : stack) peek() : element;
+BEGIN
+    IF (this.size = 0) THEN
+        RETURN NIL;
+    ELSE
+        RETURN this.stackArray[this.size - 1];
+    END;
+END peek;
+
+PROGRAM stacks
+    VAR myStack : stack;
+    VAR myOtherStack : stack;
+    VAR count : INTEGER;
+    VAR thisElement : element;
+BEGIN
+    NEW(myStack);
+    myStack.init();
+    NEW(myOtherStack);
+    myOtherStack.init();
+    count := 50;
+    WHILE (count > 0) DO
+        NEW(thisElement);
+        thisElement.value := count;
+        myStack.push(thisElement);
+        count := count - 1;
+    END;
+    WHILE (myStack.peek() # NIL) DO
+        thisElement := myStack.peek();
+        WRITE "The popped element has the value: ", thisElement.value, NL;
+        myOtherStack.push(myStack.pop());
+    END;
+    WHILE (myOtherStack.peek() # NIL) DO
+        thisElement := myOtherStack.pop();
+        WRITE "This element has the value: ", thisElement.value, NL;
+    END;
+END.

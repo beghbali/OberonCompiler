@@ -1,0 +1,8 @@
+PROGRAM simple
+VAR x : INTEGER;
+BEGIN
+	x := 2;
+	x := x + 2;
+	x := x + x;
+	WRITE x;
+END.

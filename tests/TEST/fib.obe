@@ -1,0 +1,16 @@
+VAR base : INTEGER;
+
+PROCEDURE fib(n:INTEGER) : INTEGER;
+BEGIN
+	IF(n = 0) THEN RETURN 0;
+	ELSE IF(n = 1) THEN RETURN 1; END;
+	END;
+	RETURN fib(n-1)+fib(n-2);
+	
+END fib;
+PROGRAM main	
+BEGIN
+	WRITE "Enter Fibonacci base f(n), n: ";
+	READ base;
+	WRITE "Fib(",base,")=",fib(base),NL;
+END.

@@ -1,0 +1,101 @@
+
+TYPE NODE = 
+	POINTER TO RECORD
+		left : NODE;
+		right : NODE;
+		value : INTEGER;
+	END;
+
+
+PROCEDURE (root : NODE) insert(value : INTEGER);
+BEGIN
+
+	IF(value < root.value) THEN
+		IF(root.left = NIL) THEN
+			NEW(root.left);
+			root.left.left := NIL;
+			root.left.right := NIL;
+			root.left.value := value;
+		ELSE
+			root.left.insert(value);
+		END;
+	ELSE
+		IF(root.right = NIL) THEN
+			NEW(root.right);
+			root.right.left := NIL;
+			root.right.right := NIL;
+			root.right.value := value;
+		ELSE
+			root.right.insert(value);
+		END;
+	END;
+	
+END insert;
+
+
+PROCEDURE (root : NODE) insert2(value : INTEGER);
+	VAR ptr : NODE;
+	VAR newnode : NODE;
+BEGIN
+	NEW(newnode);
+	newnode.left := NIL;
+	newnode.right := NIL;
+	newnode.value := value;
+	ptr := root;
+
+	WHILE(ptr # NIL) DO
+		IF(value < ptr.value) THEN
+			IF(ptr.left = NIL) THEN
+				ptr.left := newnode;
+				EXIT;
+			ELSE
+				ptr := ptr.left;
+			END;
+		ELSE
+			IF(ptr.right = NIL) THEN
+				ptr.right := newnode;
+				EXIT;
+			ELSE
+				ptr := ptr.right;
+			END;		
+		END;
+	END;
+	
+END insert2;
+
+
+PROCEDURE (root : NODE) traverse();
+BEGIN
+	IF(root = NIL) THEN
+		RETURN;
+	END;
+	
+	IF(root.left # NIL) THEN
+		root.left.traverse();
+	END;
+	WRITE root.value, NL;
+	IF(root.right # NIL) THEN
+		root.right.traverse();
+	END;
+END traverse;
+
+
+
+
+
+PROGRAM BINSORT
+	VAR input : INTEGER;
+	VAR root : NODE;
+BEGIN
+	NEW(root);
+	root.left := NIL;
+	root.right := NIL;
+	root.value := 100;
+
+	WHILE(1 < 2) DO
+		WRITE "ENTER new value: ";
+		READ input;
+		root.insert(input);
+		root.traverse();
+	END;
+END.

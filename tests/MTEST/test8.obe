@@ -1,0 +1,29 @@
+PROCEDURE Square (nonvar : INTEGER; VAR var : INTEGER);
+BEGIN
+     
+		nonvar := nonvar * nonvar;	
+        var := var * var;
+
+        WRITE nonvar;
+        WRITE ", ";
+        WRITE var;
+        WRITE NL;
+
+
+END Square;
+
+VAR x, y : INTEGER;
+
+PROGRAM stest8
+BEGIN
+        x := 5;
+        y := 6;
+          
+        WRITE x;
+        WRITE ", ";
+        WRITE y;
+        WRITE NL;
+       
+	   Square (x, y); 
+	
+END.

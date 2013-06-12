@@ -1,0 +1,40 @@
+CONST magicNum = 555;
+CONST threshold = 3;
+
+PROGRAM guess
+	VAR guess : INTEGER;
+	VAR tries : INTEGER;
+	VAR i : INTEGER;
+BEGIN
+
+
+
+	WRITE "WELCOME TO THE *GUESS THE NUMBER* GAME", NL;
+	WRITE "Rule: guess only positive numbers", NL, NL, NL;
+
+	WHILE((guess > -1) & (guess # magicNum)) DO
+	
+		IF(tries >= threshold) THEN
+			WRITE "Are you stupid or just unlucky? (Try #", tries, ")", NL;
+		END;
+		tries := tries + 1;
+	
+		WRITE "Enter guess: ";
+		READ guess;
+		
+		IF((guess > -1) & (guess = magicNum)) THEN
+			WRITE "You got it!!!", NL, NL;
+			EXIT;
+		ELSE
+			IF(guess < magicNum) THEN
+				WRITE guess, " is too low...", NL;
+			ELSE
+				WRITE guess, " is too high...", NL;
+			END;
+		END;
+		
+		WRITE NL;
+		
+	END;
+
+END.

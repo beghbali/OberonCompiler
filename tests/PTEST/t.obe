@@ -1,0 +1,33 @@
+TYPE PR = 
+	POINTER TO RECORD
+		
+		a, b, c : INTEGER;
+		T, F , bool, b1, b2 : BOOLEAN;
+	
+		AI : ARRAY 10 OF INTEGER;
+		AAI : ARRAY 10 OF ARRAY 10 OF INTEGER;
+		AB : ARRAY 10 OF BOOLEAN;
+		AAB : ARRAY 10 OF ARRAY 10 OF BOOLEAN;
+		
+	END;
+
+PROCEDURE (class : PR) foo(x : PR) : INTEGER;
+BEGIN
+	RETURN x.a + 1;
+END foo;
+
+PROCEDURE (class : PR) foo2(x : INTEGER) : PR;
+BEGIN
+	class.a := x;
+	RETURN class;
+END foo2;
+
+PROGRAM PHASEII
+	VAR rec : PR;
+BEGIN
+	
+	NEW(rec);
+	
+	WRITE rec.foo(rec.foo2(5)), NL;
+	
+END.

@@ -1,0 +1,70 @@
+(* stack implementation
+Check record, array, type-pound procedure
+*)
+
+TYPE stack = RECORD 
+		  stk  : ARRAY 20 OF INTEGER;
+		  size : INTEGER;
+		END;
+
+TYPE stackPtr = POINTER TO stack;
+
+
+PROCEDURE (S : stackPtr) pop();
+BEGIN
+ S.size := S.size - 1;
+END pop;
+
+
+PROCEDURE (S : stackPtr) push(e : INTEGER);
+BEGIN
+ S.size := S.size + 1 ;
+ S.stk[S.size] := e;
+END push;
+
+
+
+PROCEDURE (S : stackPtr) top () : INTEGER;
+BEGIN
+ RETURN S.stk[S.size];
+END top;
+
+PROCEDURE (S : stackPtr) init();
+BEGIN
+ S.size := 0-1;
+END init;
+
+PROCEDURE (S : stackPtr) empty() :BOOLEAN;
+BEGIN
+ IF S.size < 0 THEN
+	RETURN TRUE;
+ ELSE
+	RETURN FALSE;
+ END;
+END empty;
+
+VAR mystack : POINTER TO stack;
+
+PROGRAM main
+VAR index : INTEGER;
+BEGIN
+ NEW(mystack);
+ mystack.init();
+
+ mystack.push(0);
+ mystack.push(1);
+ mystack.push(2);
+ mystack.push(3);
+ mystack.push(4);
+ mystack.push(5);
+ mystack.push(6);
+ mystack.push(7);
+ mystack.push(8);
+ mystack.push(9);
+
+
+	WHILE mystack.empty() # TRUE DO
+		WRITE mystack.top(), NL;
+		mystack.pop();
+	END;	
+END.

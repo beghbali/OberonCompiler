@@ -1,0 +1,18 @@
+PROGRAM s15a
+  
+
+VAR b1, b2 : BOOLEAN;
+VAR x, y : INTEGER;
+BEGIN
+  	b1 := TRUE;
+	b2 := FALSE;
+	
+	IF  b1 OR ( (x DIV 0) > 3) THEN
+		WRITE "1", NL;
+	ELSE
+		WRITE "0", NL;
+	END;
+	WRITE "OUT ", NL;
+END.
+
+

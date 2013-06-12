@@ -1,0 +1,143 @@
+(* Display Diamond *)
+
+PROCEDURE getInnerChar(VAR num:INTEGER);
+BEGIN
+  WHILE TRUE
+  DO
+    WRITE "Please enter a number for inner diamond:";
+    READ num;
+    IF((num < 0) OR (num > 9))
+    THEN
+      WRITE "Number must be positive and less than 10, please try again...",NL;
+      getInnerChar(num);
+      EXIT;
+    ELSE
+      EXIT;
+    END;
+  END;
+END getInnerChar;
+
+PROCEDURE getOutterChar(inner:INTEGER;VAR num:INTEGER);
+BEGIN
+  WHILE TRUE
+  DO
+    WRITE "Please enter a number for outter border:";
+    READ num;
+    IF( (num < 0) OR (num > 9))
+    THEN
+      WRITE "Number must be positive and less than 10, please try again...",NL;
+      getOutterChar(inner,num);
+      EXIT;
+    ELSE
+      IF(num = inner)
+      THEN
+        WRITE "Error, inner and outter can't be the try, please try again...",NL;
+        getOutterChar(inner,num);
+        EXIT;
+      ELSE
+        EXIT;
+      END;
+    END;
+  END;
+END getOutterChar;
+
+PROCEDURE getHeight():INTEGER;
+  VAR num:INTEGER;
+  VAR condition:BOOLEAN;
+BEGIN
+  condition := TRUE;
+  WHILE condition
+  DO
+    WRITE "Please enter a number for row:";
+    READ num;
+    IF num < 0
+    THEN
+      WRITE "Error, row must be positive, please try again...",NL;
+    ELSE
+      IF((num MOD 2) # 1)
+        THEN
+        WRITE "Error, row must be odd, please try again...",NL;
+      ELSE
+        RETURN num;
+      END;
+    END;
+  END;
+END getHeight;
+
+PROCEDURE displayDiamond(innerChar,outterChar,height:INTEGER);
+VAR row,sp,star:INTEGER;
+BEGIN
+row := 1;
+  WHILE( row <= (height - 2))
+  DO
+    sp := (height - row) DIV 2;
+    WHILE sp > 0
+    DO
+      WRITE outterChar;
+      sp := sp - 1;
+    END;
+
+    star := 1;
+    WHILE(star <= row)
+    DO
+      WRITE innerChar;
+      star := star +  1;
+    END;
+
+    sp := (height - row) DIV 2;
+    WHILE sp > 0
+    DO
+      WRITE outterChar;
+      sp := sp - 1;
+    END;
+
+    WRITE NL;
+    row := row + 2;
+  END;
+
+    row := height;
+  WHILE( row >= 0 )
+  DO
+    sp := (height - row) DIV 2;
+    WHILE(sp > 0)
+    DO
+      WRITE outterChar;
+      sp := sp - 1;
+    END;
+
+    star := 1;
+    WHILE(star <= row)
+    DO
+      WRITE innerChar;
+      star := star + 1;
+    END;
+
+    sp := (height - row) DIV 2;
+    WHILE(sp > 0)
+    DO
+      WRITE outterChar;
+      sp := sp - 1;
+    END;
+
+    WRITE NL;
+    row := row - 2;
+  END;
+END displayDiamond;
+
+
+PROGRAM main
+VAR innerChar, outterChar, height:INTEGER;
+BEGIN
+    getInnerChar(innerChar);
+    getOutterChar(innerChar,outterChar);
+    height := getHeight();
+
+    WRITE "DEBUG: The inner char is ",innerChar,NL;
+    WRITE "DEBUG: The outter char is ",outterChar,NL;
+    WRITE "DEBUG: The height is ",height,NL;
+    displayDiamond(innerChar,outterChar,height);
+END.
+
+
+
+

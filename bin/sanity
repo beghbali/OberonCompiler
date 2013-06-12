@@ -1,0 +1,68 @@
+echo "oberon TEST/array.obe:"
+oberon TEST/array.obe
+make compile
+a.out
+echo "oberon TEST/array2.obe:"
+oberon TEST/array2.obe
+make compile
+a.out
+echo "oberon TEST/firsttest.obe:"
+oberon TEST/firsttest.obe
+make compile
+a.out
+echo "oberon TEST/globalvardecl.obe:"
+oberon TEST/globalvardecl.obe
+make compile
+a.out
+echo "oberon TEST/ptest1.obe";
+oberon TEST/ptest1.obe
+make compile
+a.out
+echo "oberon TEST/quicksort.obe:"
+oberon TEST/quicksort.obe
+make compile
+a.out
+echo "oberon TEST/simpletest.obe:"
+oberon TEST/simpletest.obe
+make compile
+a.out
+echo "oberon TEST/test1.obe:"
+oberon TEST/test1.obe
+make compile
+a.out
+echo "oberon TEST/test2.obe:"
+oberon TEST/test2.obe
+make compile
+a.out
+echo "oberon TEST/test3.obe:"
+oberon TEST/test3.obe
+make compile
+a.out
+echo "oberon TEST/test4.obe:"
+oberon TEST/test4.obe
+make compile
+a.out
+echo "oberon TEST/test6.obe:"
+oberon TEST/test6.obe
+make compile
+a.out
+echo "oberon TEST/test8.obe:"
+oberon TEST/test8.obe
+make compile
+a.out
+echo "oberon TEST/test9.obe:"
+oberon TEST/test9.obe
+make compile
+a.out
+echo "oberon TEST/testfwd.obe:"
+oberon TEST/testfwd.obe
+make compile
+a.out
+echo "oberon TEST/pow.obe"
+oberon TEST/pow.obe
+make compile
+a.out
+echo "oberon TEST/fib.obe"
+oberon TEST/fib.obe
+make compile
+a.out

@@ -1,0 +1,177 @@
+
+TYPE PR = 
+	POINTER TO RECORD
+		
+		i : INTEGER;
+		b : BOOLEAN;
+		
+		AI : ARRAY 10 OF INTEGER;
+		AAI : ARRAY 10 OF ARRAY 10 OF INTEGER;
+		
+		AB : ARRAY 10 OF BOOLEAN;
+		AAB : ARRAY 10 OF ARRAY 10 OF BOOLEAN;		
+		
+		pr : PR;
+		AP : ARRAY 10 OF PR;
+		AAP : ARRAY 10 OF ARRAY 10 OF PR;
+		
+	END;
+	
+	
+	
+PROCEDURE p1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN);
+BEGIN
+	x := y;
+END p1;
+
+PROCEDURE f1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : INTEGER;
+BEGIN
+	x := y;
+	RETURN x;
+END f1;
+
+PROCEDURE f2(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : BOOLEAN;
+BEGIN
+	x := y;
+	RETURN b1;
+END f2;
+	
+
+
+	VAR rec : PR;
+	
+	VAR i : INTEGER;
+	VAR AP : ARRAY 10 OF PR;
+	VAR AAP : ARRAY 10 OF ARRAY 10 OF PR;
+PROGRAM IIIa
+
+	
+BEGIN
+
+
+	WRITE NL, "*****RECORD ELEMENTS*****", NL;
+	NEW(rec);
+	rec.i := 111; WRITE rec.i, " == ", 111, NL;
+	rec.b := TRUE; WRITE rec.b, " == ", "TRUE", NL;
+	rec.AI[1] := rec.i; WRITE rec.AI[1], " == ", 111, NL;
+	rec.AAI[2][3] := rec.AI[1]; WRITE rec.AAI[2][3], " == ", 111, NL;
+	rec.AB[1] := rec.b;	WRITE rec.AB[1], " == ", TRUE, NL;
+	rec.AAB[2][3] := rec.AB[1];	WRITE rec.AAB[2][3], " == ", TRUE, NL;
+
+
+	WRITE NL;
+	NEW(rec.pr);
+	rec.pr.i := 111; WRITE rec.pr.i, " == ", 111, NL;
+	rec.pr.b := TRUE; WRITE rec.pr.b, " == ", "TRUE", NL;
+	rec.pr.AI[1] := rec.pr.i; WRITE rec.pr.AI[1], " == ", 111, NL;
+	rec.pr.AAI[2][3] := rec.pr.AI[1]; WRITE rec.pr.AAI[2][3], " == ", 111, NL;
+	rec.pr.AB[1] := rec.pr.b;	WRITE rec.pr.AB[1], " == ", TRUE, NL;
+	rec.pr.AAB[2][3] := rec.pr.AB[1];	WRITE rec.pr.AAB[2][3], " == ", TRUE, NL;
+	
+	
+	WRITE NL;
+	NEW(rec.AP[5]);
+	rec.AP[5].i := 111; WRITE rec.AP[5].i, " == ", 111, NL;
+	rec.AP[5].b := TRUE; WRITE rec.AP[5].b, " == ", "TRUE", NL;
+	rec.AP[5].AI[1] := rec.AP[5].i; WRITE rec.AP[5].AI[1], " == ", 111, NL;
+	rec.AP[5].AAI[2][3] := rec.AP[5].AI[1]; WRITE rec.AP[5].AAI[2][3], " == ", 111, NL;
+	rec.AP[5].AB[1] := rec.AP[5].b;	WRITE rec.AP[5].AB[1], " == ", TRUE, NL;
+	rec.AP[5].AAB[2][3] := rec.AP[5].AB[1];	WRITE rec.AP[5].AAB[2][3], " == ", TRUE, NL;
+
+	WRITE NL;
+	NEW(rec.AAP[5][6]);
+	rec.AAP[5][6].i := 111; WRITE rec.AAP[5][6].i, " == ", 111, NL;
+	rec.AAP[5][6].b := TRUE; WRITE rec.AAP[5][6].b, " == ", "TRUE", NL;
+	rec.AAP[5][6].AI[1] := rec.AAP[5][6].i; WRITE rec.AAP[5][6].AI[1], " == ", 111, NL;
+	rec.AAP[5][6].AAI[2][3] := rec.AAP[5][6].AI[1]; WRITE rec.AAP[5][6].AAI[2][3], " == ", 111, NL;
+	rec.AAP[5][6].AB[1] := rec.AAP[5][6].b;	WRITE rec.AAP[5][6].AB[1], " == ", TRUE, NL;
+	rec.AAP[5][6].AAB[2][3] := rec.AAP[5][6].AB[1];	WRITE rec.AAP[5][6].AAB[2][3], " == ", TRUE, NL;	
+	
+	WRITE NL;
+	NEW(rec.AAP[5][6].AAP[7][8]);
+	rec.AAP[5][6].AAP[7][8].i := 111; WRITE rec.AAP[5][6].AAP[7][8].i, " == ", 111, NL;
+	rec.AAP[5][6].AAP[7][8].b := TRUE; WRITE rec.AAP[5][6].AAP[7][8].b, " == ", "TRUE", NL;
+	rec.AAP[5][6].AAP[7][8].AI[1] := rec.AAP[5][6].AAP[7][8].i; WRITE rec.AAP[5][6].AAP[7][8].AI[1], " == ", 111, NL;
+	rec.AAP[5][6].AAP[7][8].AAI[2][3] := rec.AAP[5][6].AAP[7][8].AI[1]; WRITE rec.AAP[5][6].AAP[7][8].AAI[2][3], " == ", 111, NL;
+	rec.AAP[5][6].AAP[7][8].AB[1] := rec.AAP[5][6].AAP[7][8].b;	WRITE rec.AAP[5][6].AAP[7][8].AB[1], " == ", TRUE, NL;
+	rec.AAP[5][6].AAP[7][8].AAB[2][3] := rec.AAP[5][6].AAP[7][8].AB[1];	WRITE rec.AAP[5][6].AAP[7][8].AAB[2][3], " == ", TRUE, NL;	
+	
+	WRITE NL;
+	NEW(AP[7]);
+	AP[7].i := 111; WRITE AP[7].i, " == ", 111, NL;
+	AP[7].b := TRUE; WRITE AP[7].b, " == ", "TRUE", NL;
+	AP[7].AI[1] := AP[7].i; WRITE AP[7].AI[1], " == ", 111, NL;
+	AP[7].AAI[2][3] := AP[7].AI[1]; WRITE AP[7].AAI[2][3], " == ", 111, NL;
+	AP[7].AB[1] := AP[7].b;	WRITE AP[7].AB[1], " == ", TRUE, NL;
+	AP[7].AAB[2][3] := AP[7].AB[1];	WRITE AP[7].AAB[2][3], " == ", TRUE, NL;
+	
+	WRITE NL;
+	NEW(AAP[8][9]);
+	AAP[8][9].i := 111; WRITE AAP[8][9].i, " == ", 111, NL;
+	AAP[8][9].b := TRUE; WRITE AAP[8][9].b, " == ", "TRUE", NL;
+	AAP[8][9].AI[1] := AAP[8][9].i; WRITE AAP[8][9].AI[1], " == ", 111, NL;
+	AAP[8][9].AAI[2][3] := AAP[8][9].AI[1]; WRITE AAP[8][9].AAI[2][3], " == ", 111, NL;
+	AAP[8][9].AB[1] := AAP[8][9].b;	WRITE AAP[8][9].AB[1], " == ", TRUE, NL;
+	AAP[8][9].AAB[2][3] := AAP[8][9].AB[1];	WRITE AAP[8][9].AAB[2][3], " == ", TRUE, NL;	
+	
+	
+	
+
+
+	WRITE NL, "*****RECORD EXPRS*****", NL;
+	NEW(rec);
+	rec.i := 111;
+	WRITE rec.i + rec.i + rec.i, " == ", 333, NL;
+	
+	rec.AI[2] := 333;
+	i := rec.AI[2];
+	WRITE rec.AI[2] + i, " == ", 666, NL;
+
+	NEW(rec.pr);
+	rec.pr.i := 111;
+	rec.pr.AI[0] := 222;
+	i := rec.pr.i + rec.pr.AI[0];
+	WRITE rec.pr.i + rec.pr.AI[0], " == ", 333, NL;
+	
+	NEW(rec);
+	NEW(rec.AP[9]);
+	rec.AP[9].i := 9;
+	WRITE rec.AP[9].i + rec.AP[9].i * rec.AP[9].i DIV rec.AP[9].i  -rec.AP[9].i, " == ", 9, NL;
+	
+	NEW(rec);
+	rec.AAI[2][5] := 33;
+	WRITE rec.AAI[2][5] + rec.AAI[2][5] * rec.AAI[2][5] DIV rec.AAI[2][5] - rec.AAI[2][5], " == ", rec.AAI[2][5], NL;	
+
+	NEW(rec);
+	NEW(rec.pr);
+	rec.pr.AI[2] := 3;
+	rec.AI[rec.pr.AI[2]] := 4;
+	WRITE rec.AI[3], " == ", 4, NL;
+	rec.pr.AI[2] := 3;
+	rec.pr.AI[rec.pr.AI[2]] := 5;
+	WRITE rec.pr.AI[3], " == ",	5, NL;
+	rec.AI[2] := 3;
+	rec.pr.AI[rec.AI[2]] := 6;
+	WRITE rec.pr.AI[3], " == ", 6, NL;
+
+
+	WRITE NL, "*****READ INTO RECORD ELEMENT*****", NL;
+	NEW(rec);
+	NEW(rec.pr);
+	NEW(rec.AP[3]);
+	NEW(rec.AAP[3][1]);
+	
+	WRITE "Enter #: ";	READ rec.i;
+	WRITE rec.i, NL;
+	WRITE "Enter #: ";	READ rec.pr.i;
+	WRITE rec.pr.i, NL;
+	WRITE "Enter #: ";	READ rec.AP[3].i;
+	WRITE rec.AP[3].i, NL; 
+	WRITE "Enter #: ";	READ rec.AAP[3][1].i;
+	WRITE rec.AAP[3][1].i, NL;
+	
+	WRITE NL, NL;
+	
+
+
+END.

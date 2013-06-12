@@ -1,0 +1,176 @@
+CONST one = 1;
+CONST two = ((1 + 2 * one - 1) * 2) DIV 2;
+CONST three = one + two;
+CONST string = "STRING CONSTANT";
+CONST true = ~~(TRUE & FALSE) OR ~~TRUE;
+CONST false = ~true;
+
+
+VAR x : INTEGER;
+
+
+
+
+PROGRAM PHASEIIa
+	VAR a, b, c : INTEGER;
+	VAR T, F , bool : BOOLEAN;
+BEGIN
+
+	WRITE NL, "*****DIV, * & MOD*****", NL;
+	WRITE one, " == ", 1, NL;
+	WRITE two, " == ", 2, NL;
+	WRITE three, " == ", 3, NL;
+	WRITE 1*2*2, " == ", 4, NL;
+	WRITE 11 DIV 2, " == ", 5, NL;
+	x := one;	WRITE x, " == ", 1, NL;
+	x := two;	WRITE x, " == ", 2, NL;
+	x := three;	WRITE x, " == ", 3, NL;
+	x := 1*2*2;	WRITE x, " == ", 4, NL;
+	x := 11 DIV 2;	WRITE x, " == ", 5, NL;
+
+	a := 3; b := 5; c := 6;
+	WRITE a*b*c, " == ", 90, NL;
+	WRITE a*b DIV c, " == ", 2, NL;
+	WRITE a*a*a*b*b*b*c*c*c, " == ", 729000, NL;
+	WRITE a*a*a*b*b*b*c*c*c DIV a DIV a DIV a DIV b DIV b DIV b DIV c DIV c DIV c, " == ", 1, NL;
+	x := a*b*c; WRITE x, " == ", 90, NL;
+	x := a*b DIV c; WRITE x, " == ", 2, NL;
+	x := a*a*a*b*b*b*c*c*c; WRITE x, " == ", 729000, NL;
+	x := a*a*a*b*b*b*c*c*c DIV a DIV a DIV a DIV b DIV b DIV b DIV c DIV c DIV c; WRITE x, " == ", 1, NL;
+	
+
+	
+	WRITE NL, "*****BOOLEAN LITS, CONSTS, VARS*****", NL;
+	WRITE TRUE, " == ", "TRUE", NL;
+	WRITE FALSE, " == ", "FALSE", NL;
+	WRITE true, " == ", "TRUE", NL;
+	WRITE false, " == ", "FALSE", NL;
+	T := true;
+	F := false;
+	WRITE T, " == ", "TRUE", NL;
+	WRITE F, " == ", "FALSE", NL;
+	
+	
+	
+	WRITE NL, "*****RELATION/LOGICAL OPERATORS*****", NL;
+	a := 1; b := 2;
+	WRITE 1 >= 2, " == ", "FALSE", NL;
+	WRITE 2 >= 1, " == ", "TRUE", NL;
+	WRITE 1 >= 1, " == ", "TRUE", NL;
+	bool := 2 >= 1;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	WRITE one <= two, " == ", "TRUE", NL;
+	WRITE two <= one, " == ", "FALSE", NL;
+	WRITE one <= one, " == ", "TRUE", NL;
+	bool := two <= one;
+	WRITE bool, " == ", "FALSE", NL;
+	
+	WRITE a > b, " == ", "FALSE", NL;
+	WRITE b > a, " == ", "TRUE", NL;
+	bool := b > a;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	WRITE 1 < b, " == ", "TRUE", NL;
+	WRITE two < a, " == ", "FALSE", NL;
+	bool := 1 < b;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	WRITE 1 = 1, " == ", "TRUE", NL;
+	WRITE one = one, " == ", "TRUE", NL;
+	WRITE a = a, " == ", "TRUE", NL;
+	bool := 1 = 1;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	WRITE 1 # 2, " == ", "TRUE", NL;
+	WRITE one # two, " == ", "TRUE", NL;
+	WRITE a # b, " == ", "TRUE", NL;	
+	bool := 1 # 2;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	WRITE 1 # 1, " == ", "FALSE", NL;
+	WRITE one # one, " == ", "FALSE", NL;
+	WRITE a # a, " == ", "FALSE", NL;
+	bool := 1 # 1;
+	WRITE bool, " == ", "FALSE", NL;
+	
+	WRITE 1 = 2, " == ", "FALSE", NL;
+	WRITE one = two, " == ", "FALSE", NL;
+	WRITE a = b, " == ", "FALSE", NL;
+	bool := a = b;
+	WRITE bool, " == ", "FALSE", NL;
+	
+	WRITE TRUE & FALSE, " == ", "FALSE", NL;
+	WRITE FALSE & TRUE, " == ", "FALSE", NL;
+	WRITE TRUE & TRUE, " == ", "TRUE", NL;
+	WRITE FALSE & FALSE, " == ", "FALSE", NL;
+	bool := TRUE & FALSE;
+	WRITE bool, " == ", "FALSE", NL;
+	
+	WRITE TRUE OR FALSE, " == ", "TRUE", NL;
+	WRITE FALSE OR TRUE, " == ", "TRUE", NL;
+	WRITE TRUE OR TRUE, " == ", "TRUE", NL;
+	WRITE FALSE OR FALSE, " == ", "FALSE", NL;
+	bool := FALSE OR TRUE;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	WRITE true & false, " == ", "FALSE", NL;
+	WRITE false & true, " == ", "FALSE", NL;
+	WRITE true & true, " == ", "TRUE", NL;
+	WRITE false & false, " == ", "FALSE", NL;
+	bool := true & true;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	WRITE true OR false, " == ", "TRUE", NL;
+	WRITE false OR true, " == ", "TRUE", NL;
+	WRITE true OR true, " == ", "TRUE", NL;
+	WRITE false OR false, " == ", "FALSE", NL;
+	bool := false OR false;
+	WRITE bool, " == ", "FALSE", NL;
+	
+	WRITE T & F, " == ", "FALSE", NL;
+	WRITE F & T, " == ", "FALSE", NL;
+	WRITE T & T, " == ", "TRUE", NL;
+	WRITE F & F, " == ", "FALSE", NL;
+	bool := T & F;
+	WRITE bool, " == ", "FALSE", NL;
+	
+	WRITE T OR F, " == ", "TRUE", NL;
+	WRITE F OR T, " == ", "TRUE", NL;
+	WRITE T OR T, " == ", "TRUE", NL;
+	WRITE F OR F, " == ", "FALSE", NL;
+	bool := F OR T;
+	WRITE bool, " == ", "TRUE", NL;
+	
+	T := true;
+	WRITE ~T, " == ", "FALSE", NL;
+	F := false;
+	WRITE ~F, " == ", "TRUE", NL;
+	
+	bool := ~(~(~T OR ~(1<2)) & (~F=T));
+	WRITE ~(~(~T OR ~(1<2)) & (~F=T)), " == ", bool, " == ", "FALSE", NL;
+	bool := (~(~T OR ~(1<2)) & (~F=T));
+	WRITE (~(~T OR ~(1<2)) & (~F=T)), " == ", bool, " == ", "TRUE", NL;	
+	bool := (TRUE OR F OR FALSE);
+	WRITE (TRUE OR F OR FALSE), " == ", bool, " == ", "TRUE", NL;
+	bool := (true & FALSE & FALSE);
+	WRITE (true & FALSE & FALSE), " == ", bool, " == ", "FALSE", NL;
+	bool := (~TRUE OR FALSE OR ~false);
+	WRITE (~TRUE OR FALSE OR ~false), " == ", bool, " == ", "TRUE", NL;
+	bool := (~T & ~FALSE & FALSE);
+	WRITE (~T & ~FALSE & FALSE), " == ", bool, " == ", "FALSE", NL;
+	bool := (~T OR FALSE OR false);
+	WRITE (~T OR FALSE OR false), " == ", bool, " == ", "FALSE", NL;
+	bool := (TRUE & ~FALSE & ~FALSE);
+	WRITE (TRUE & ~FALSE & ~FALSE), " == ", bool, " == ", "TRUE", NL;
+	
+	
+	
+	WRITE NL, "*****STRING LITS & CONSTS*****", NL;
+	WRITE string, " == ", "STRING CONSTANT", NL;
+	
+
+		
+	
+	
+END.

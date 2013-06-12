@@ -1,0 +1,29 @@
+PROCEDURE x() : INTEGER;
+BEGIN
+	RETURN x();
+END x;
+
+PROCEDURE pow(base:INTEGER; power:INTEGER) : INTEGER;
+VAR temp : INTEGER;
+BEGIN 
+	IF(power = 0) THEN
+		RETURN 1;
+	END;
+	IF(power MOD 2 = 0) THEN(*even*)
+		temp := pow(base, power DIV 2);
+		RETURN temp*temp;
+	ELSE
+		RETURN base * pow(base,power-1);	
+	END;
+END pow;
+
+PROGRAM main
+VAR base : INTEGER;
+    power: INTEGER;
+BEGIN
+	WRITE "Please enter base: ";
+	READ base;
+	WRITE "Please enter power: ";
+	READ power;
+	WRITE "\n", base, "^", power, "=",pow(base,power),NL;
+END.

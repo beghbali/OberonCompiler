@@ -1,0 +1,93 @@
+VAR srandseed : INTEGER;
+CONST SEEDLIMIT = 50;
+CONST RANDUPPERBOUND = 1024;
+CONST ARRAYSIZE = 10;
+TYPE ARRAYTYPE = ARRAY ARRAYSIZE OF INTEGER;
+
+PROCEDURE srand(seed: INTEGER);
+BEGIN
+	srandseed := seed MOD SEEDLIMIT;
+END srand;
+
+PROCEDURE rand() : INTEGER;
+VAR old,i,x,y : INTEGER;
+BEGIN
+	old := srandseed;
+	i := 0;
+	WHILE i < srandseed DO
+		x := (57*old+1) MOD RANDUPPERBOUND;
+		y := (57*x+1) MOD RANDUPPERBOUND;
+		old := y;
+		i := i+1;
+	END;
+	srandseed := old;
+	RETURN old;
+END rand;
+
+PROCEDURE swap(VAR a,b : INTEGER);
+VAR temp : INTEGER;
+BEGIN
+	temp := b;
+	b := a;
+	a := temp;
+END swap;
+
+
+PROCEDURE partition(VAR base : ARRAYTYPE; first, last : INTEGER) : INTEGER;
+VAR i,j,pivot : INTEGER;
+BEGIN
+	i := first;
+	j := last;
+	pivot := base[first];
+
+	WHILE(i < j) DO
+		WHILE(base[i] < pivot) DO i:= i+1; END;
+		WHILE(base[j] > pivot) DO j:= j-1; END;
+		IF(i < j) THEN 
+			swap(base[i],base[j]); 
+		ELSE
+			RETURN j;
+		END;
+	END;
+
+END partition;
+
+
+PROCEDURE qsort(VAR base : ARRAYTYPE; first,last : INTEGER);
+VAR pivot : INTEGER;
+BEGIN
+
+IF( last > first) THEN
+	pivot := partition(base,first, last);
+	qsort(base, first, pivot);
+	qsort(base,pivot+1, last);
+END;
+END qsort;
+
+CONST SEED = 7;
+PROGRAM main
+VAR i : INTEGER;
+    array : ARRAYTYPE;
+BEGIN
+i := 0;
+srand(SEED);
+WRITE "before sort:", NL;
+WHILE i < ARRAYSIZE DO
+	array[i] := rand(); 
+	WRITE "[",array[i],"]";
+	i := i + 1;
+END;
+
+qsort(array, 0, ARRAYSIZE-1);
+
+i := 0;
+WRITE NL,"after sort:", NL;
+WHILE i < ARRAYSIZE DO
+	WRITE "[",array[i],"]";
+	i := i + 1;
+END;
+WRITE NL;
+
+END.
+		
+	

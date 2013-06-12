@@ -1,0 +1,22 @@
+(* phaseII/I : tests while loops, writestring, readint, and 
+ *	return
+ *)
+
+PROCEDURE loop ();
+VAR input : INTEGER;
+BEGIN
+        READ input;
+        WHILE (input > 0) DO
+                WRITE input, NL;
+                input := input - 1;
+                IF (input > 30) THEN
+                        WRITE "that's big", NL;
+                        RETURN;
+                END;
+        END;
+END loop;
+
+PROGRAM stest4
+BEGIN
+        loop;
+END.

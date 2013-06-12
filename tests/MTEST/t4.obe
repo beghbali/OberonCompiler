@@ -1,0 +1,26 @@
+
+VAR a,b,c :INTEGER;
+
+
+PROGRAM P
+BEGIN
+a:=1;
+b:=2;
+c:=3;
+	
+	IF a < b
+	THEN
+		WRITE "IN THE LOOP",NL;
+		IF b < c
+		THEN
+			WRITE "IN THE NESTED LOOP",NL;
+		END;
+	END;
+	
+	IF b < c
+	THEN
+		WRITE "IN THE LOOP",NL;
+	END;
+
+WRITE "DONE",NL;
+END.

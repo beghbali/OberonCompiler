@@ -1,0 +1,57 @@
+VAR y : INTEGER;
+VAR z : INTEGER;
+
+PROCEDURE calc2(p:INTEGER;b:BOOLEAN) : INTEGER;
+BEGIN
+	WHILE (b OR (p < 100)) DO
+		p := p+1;
+		IF(p MOD 10 = 0) THEN
+			WRITE p,NL;
+			EXIT;
+		END;
+	END;
+	RETURN p;
+END calc2;
+
+PROCEDURE calc(w:INTEGER) : INTEGER;
+BEGIN
+IF ((y > z) OR (z < w)) THEN
+		IF( z < w+1) THEN
+	  		y:= w;
+		ELSE
+			y:= -w;
+		END;
+		y := 99;		
+	ELSE
+	  y:= z * y;
+
+	END;
+	z := y * z + (z*z) DIV 2;
+
+RETURN 1+calc2(w,TRUE);
+END calc;
+
+PROCEDURE ppp() : BOOLEAN;
+BEGIN
+RETURN TRUE;
+END ppp;
+
+PROGRAM main
+VAR w : INTEGER;
+VAR x : INTEGER;
+VAR b : BOOLEAN;
+BEGIN
+	w := 1;
+	z := 2;
+	y := 3;
+	x := 2;
+	w := calc(w);
+	x := (x+x)*((x+x)*((x+x)*((x+x)*((x+x)*((x+x)*(x+x))))));
+	WRITE "w := " , w , NL;
+	WRITE "z := " , z , NL;
+	WRITE "y := " , y , NL, "x := ", x, NL;
+	b := TRUE;
+	WRITE "B := " , b, NL;
+	b := FALSE; 
+	WRITE "B := " , b, NL;
+END.	

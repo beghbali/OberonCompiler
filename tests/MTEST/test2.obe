@@ -1,0 +1,23 @@
+(*      
+ * output - 7
+ *)
+
+PROCEDURE eep ();
+VAR x : INTEGER;
+VAR y : INTEGER;
+
+BEGIN
+        x := 2;
+        y := 3;
+        IF (y < 2) THEN
+                WRITE y + 1, NL, NL;
+        ELSE  
+                WRITE 5 + x, NL;
+        END;
+END eep;
+
+
+PROGRAM stest2
+BEGIN
+        eep();
+END.

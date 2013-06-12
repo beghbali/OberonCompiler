@@ -1,0 +1,268 @@
+(*Random number generator*)
+VAR srandseed : INTEGER;
+CONST SEEDLIMIT = 11;
+CONST RANDUPPERBOUND = 7;
+PROCEDURE srand(seed: INTEGER);
+BEGIN
+	srandseed := seed MOD SEEDLIMIT;
+END srand;
+
+PROCEDURE pow(base:INTEGER; power:INTEGER) : INTEGER;
+VAR temp : INTEGER;
+BEGIN 
+	IF(power = 0) THEN
+		RETURN 1;
+	END;
+	IF(power MOD 2 = 0) THEN(*even*)
+		temp := pow(base, power DIV 2);
+		RETURN temp*temp;
+	ELSE
+		RETURN base * pow(base,power-1);	
+	END;
+END pow;
+
+PROCEDURE rand() : INTEGER;
+VAR old,i,x,y : INTEGER;
+BEGIN
+	old := srandseed;
+	i := 0;
+	WHILE i < 32 DO
+		x := (57*old+1) MOD  RANDUPPERBOUND;
+		y := (57*x+1) MOD RANDUPPERBOUND;
+		old := y;
+		i := i+1;
+	END;
+	srandseed := old;
+	RETURN old;
+END rand;
+
+(*8 puzzle code*)
+
+(*type declarations*)
+TYPE GRID = ARRAY 3 OF ARRAY 3 OF INTEGER;
+TYPE PUZZLE = POINTER TO RECORD
+			grid : GRID;
+			indexi,indexj : INTEGER;
+			move : INTEGER;
+			END;
+TYPE TEMPARRAY = ARRAY 9 OF INTEGER;
+
+VAR puzzle : PUZZLE;
+
+(*constants*)
+CONST UP = 8;
+CONST DOWN = 5;
+CONST LEFT = 4; 
+CONST RIGHT = 6;
+CONST NOMOVE = 0;
+
+(*puzzle procedures*)
+
+(*
+ * Increments a given integer
+ *)
+PROCEDURE increment(VAR x : INTEGER);
+BEGIN
+	x := x + 1;
+END increment;
+
+(*enumeration type declarations*)
+TYPE ENUM = POINTER TO RECORD
+			array : TEMPARRAY;
+			index : INTEGER;
+			END;
+(*
+ * Gets the next enumerated value
+ *)
+PROCEDURE (this : ENUM) getNext() : INTEGER;
+BEGIN
+	increment(this.index);
+	RETURN this.array[this.index-1];
+END getNext;
+	
+PROCEDURE inRange(low,high,target : INTEGER) : BOOLEAN;
+BEGIN
+	RETURN (target > low) & (target < high);
+END inRange;
+
+PROCEDURE swap(VAR a,b : INTEGER);
+VAR temp : INTEGER;
+BEGIN
+	temp := a;
+	a := b;
+	b := temp;
+END swap;
+
+(*
+ * Creates an enumeration with specified lower and upper bounds range
+ *)
+PROCEDURE enumerate() : ENUM;
+VAR i,val : INTEGER;
+VAR temparr : TEMPARRAY;
+VAR result : ENUM;
+BEGIN	
+	i := 0;
+	WHILE i < 9 DO
+		increment(i);
+		temparr[i-1] := i;
+	END;
+	i := 0;
+	WHILE i < 3 DO
+		increment(i);
+		val := rand() MOD 3;
+		swap(temparr[val], temparr[8 - val]); 
+	END;
+	NEW(result);
+	result.array := temparr; (*deep copy*)
+	result.index := 0;
+	RETURN result;
+END enumerate;
+
+(*
+ * Initializes the puzzle
+ *)
+PROCEDURE (this : PUZZLE) init();
+VAR i,j,k,val: INTEGER;
+VAR enumHndlr : ENUM;
+BEGIN
+	this.move := NOMOVE;
+	srand(7);	
+	enumHndlr := enumerate();
+	i := 0;
+	k := 0;
+	WHILE i < 3 DO
+		j := 0;
+		WHILE j < 3 DO	
+			val := enumHndlr.getNext();
+			this.grid[i][j] := val;
+			IF(val = 9) THEN 
+				this.indexi := i;
+				this.indexj := j;	 
+			END;
+			increment(j);
+		END;
+		increment(i);
+	END;
+END init;
+
+PROCEDURE (this : PUZZLE) print();
+VAR i,j : INTEGER;
+BEGIN
+	i := 0;
+	WHILE i < 3 DO
+		j := 0;
+		WHILE j < 3 DO
+			IF this.grid[i][j] = 9 THEN
+				WRITE "* ";
+			ELSE
+				WRITE this.grid[i][j], " ";
+			END;
+			increment(j);
+		END;
+		WRITE NL;
+		increment(i);
+	END;
+
+END print;
+
+PROCEDURE (this : PUZZLE) puzzleComplete() : BOOLEAN;
+BEGIN
+	IF (this.grid[0][0] = 1) &
+	   (this.grid[0][1] = 2) &
+	   (this.grid[0][2] = 3) &
+	   (this.grid[1][0] = 4) &
+	   (this.grid[1][1] = 9) &
+	   (this.grid[1][2] = 5) &
+	   (this.grid[2][0] = 6) &
+	   (this.grid[2][1] = 7) &
+	   (this.grid[2][2] = 8) THEN
+		RETURN TRUE;
+	END;
+	RETURN FALSE;
+END puzzleComplete;
+
+PROCEDURE (this : PUZZLE) prompt;
+BEGIN
+	WRITE "Enter Move(<=4,^8,v5,=>6) or 0 to Exit: ";
+END prompt;
+
+PROCEDURE (this : PUZZLE) validateMove() : BOOLEAN;
+BEGIN
+	IF(((this.move = UP) OR (this.move = LEFT)) & (this.indexi = 0) & (this.indexj = 0))    (*upper left corner*) 
+	THEN
+		RETURN FALSE;
+	ELSE IF(((this.move = UP) OR (this.move = RIGHT)) & (this.indexi = 0) & (this.indexj = 2))    (*upper right corner*) 
+	THEN
+		RETURN FALSE;
+	ELSE IF	(((this.move = DOWN) OR (this.move = LEFT)) & (this.indexi = 2) & (this.indexj = 0))    (*lower left corner*) 
+	THEN
+		RETURN FALSE;
+	ELSE IF	(((this.move = DOWN) OR (this.move = RIGHT)) & (this.indexi = 2) & (this.indexj = 2))    (*lower right corner*) 
+	THEN
+		RETURN FALSE;
+	END;
+	END;
+	END;
+	END;
+	RETURN TRUE;
+END validateMove;
+
+PROCEDURE (this : PUZZLE) getMove;
+BEGIN
+	WHILE TRUE DO
+		READ this.move;
+		IF((this.move = UP) OR 
+		   (this.move = DOWN) OR 
+		   (this.move = LEFT) OR 
+		   (this.move = RIGHT)) THEN
+			IF this.validateMove() THEN
+				RETURN;
+			ELSE
+				WRITE "Bad Move!",NL;
+			END;
+		ELSE IF(this.move = NOMOVE) THEN EXIT; END;
+		END;
+		this.prompt();
+	END;
+END getMove;
+
+PROCEDURE (this : PUZZLE) assertMove();
+BEGIN
+	IF(this.move = UP) THEN
+		swap(this.grid[this.indexi][this.indexj], this.grid[this.indexi-1][this.indexj]);
+		this.indexi := this.indexi-1;
+	ELSE IF(this.move = DOWN) THEN
+		swap(this.grid[this.indexi][this.indexj], this.grid[this.indexi+1][this.indexj]);
+		this.indexi := this.indexi+1;
+	ELSE IF(this.move = LEFT) THEN
+		swap(this.grid[this.indexi][this.indexj], this.grid[this.indexi][this.indexj-1]);
+		this.indexj := this.indexj-1;
+	ELSE IF(this.move = RIGHT) THEN
+		swap(this.grid[this.indexi][this.indexj], this.grid[this.indexi][this.indexj+1]);
+		this.indexj := this.indexj+1;
+	END;
+	END;
+	END;
+	END;
+END assertMove;
+
+PROCEDURE run(puzzle : PUZZLE);
+BEGIN
+	WHILE(~puzzle.puzzleComplete()) DO
+		puzzle.prompt();
+		puzzle.getMove();
+		IF(puzzle.move = NOMOVE) THEN RETURN; END;
+		puzzle.assertMove();
+		puzzle.print();
+	END;
+END run;
+PROGRAM main
+BEGIN
+	NEW(puzzle);
+	puzzle.init();
+	puzzle.print();
+	run(puzzle);
+END.
+	
+
+		

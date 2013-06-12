@@ -1,0 +1,28 @@
+VAR y : INTEGER;
+VAR z : INTEGER;
+PROGRAM main
+VAR w : INTEGER;
+VAR x : INTEGER;
+BEGIN
+	w := 1;
+	z := 2;
+	y := 3;
+	x := 2;
+
+	IF ((y > z) OR (z < w)) THEN
+	(*	IF( z < w+1) THEN
+	  		y:= w;
+		ELSE
+			y:= -w;
+		END;*)
+		y := 99;		
+	ELSE
+	  y:= z * y;
+
+	END;
+	z := y * z + (z*z) DIV 2;
+	x := (x+x)*((x+x)*((x+x)*((x+x)*((x+x)*((x+x)*(x+x))))));
+	WRITE "w := " , w , NL;
+	WRITE "z := " , z , NL;
+	WRITE "y := " , y , NL, "x := ", x, NL;
+END.	

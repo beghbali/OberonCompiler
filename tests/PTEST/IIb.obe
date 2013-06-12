@@ -1,0 +1,162 @@
+CONST one = 1;
+CONST two = ((1 + 2 * one - 1) * 2) DIV 2;
+CONST three = one + two;
+CONST string = "STRING CONSTANT";
+CONST true = ~~(TRUE & FALSE) OR ~~TRUE;
+CONST false = ~true;
+
+
+VAR x : INTEGER;
+
+
+
+
+PROCEDURE p1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN);
+BEGIN
+	x := y;
+	WRITE "before b2=",b2,NL;
+	b1 := b2;
+	WRITE "after b1=",b1,NL;
+END p1;
+
+PROCEDURE f1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : INTEGER;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN x;	
+END f1;
+
+PROCEDURE f2(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : BOOLEAN;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN b1;
+END f2;
+
+PROCEDURE val(x : INTEGER) : INTEGER;
+BEGIN
+	RETURN x;
+END val;
+
+PROCEDURE recurse(x : INTEGER) : INTEGER;
+BEGIN
+	WRITE x, " ";
+	IF(x = 0) THEN
+		RETURN 0;
+	END;
+	IF(x > 0) THEN
+		RETURN recurse(x - 1);
+	END;
+	IF(x < 0) THEN
+		RETURN recurse(x + 1);
+	END;
+END recurse;
+
+
+
+PROGRAM PHASEIIb
+	VAR a, b, c : INTEGER;
+	VAR T, F , bool, b1, b2 : BOOLEAN;
+	
+	VAR AI : ARRAY 10 OF INTEGER;
+	VAR AAI : ARRAY 10 OF ARRAY 10 OF INTEGER;
+	VAR AB : ARRAY 10 OF BOOLEAN;
+	VAR AAB : ARRAY 10 OF ARRAY 10 OF BOOLEAN;
+BEGIN
+
+	WRITE NL, "*****CONTROL STATEMENTS*****", NL;
+	IF(1<2) THEN	WRITE "1<2";
+	ELSE	WRITE "1!<2";
+	END;	WRITE " == 1<2", NL;
+	IF(1>2) THEN	WRITE "1>2";
+	ELSE	WRITE "1!>2";
+	END;	WRITE " == 1!>2", NL;
+	a := 0; b := 1;
+	IF((a # 0) & ((5 DIV a) > 1)) THEN	WRITE "FAIL short circuit evaluation...", NL;
+	ELSE	WRITE "PASS short circuit evaluation...", NL;
+	END;
+	IF((a = 0) OR ((5 DIV a) > 1)) THEN	WRITE "PASS short circuit evaluation...", NL;
+	ELSE	WRITE "FAIL short circuit evaluation...", NL;
+	END;	
+
+	
+	a := 0;
+	WHILE(a <= 3) DO
+		WRITE a, " ";
+		a := a + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+
+	a := 0;
+	WHILE(a # 4) DO
+		WRITE a, " ";
+		a := a + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	
+	a := 0;
+	WHILE(TRUE) DO
+		IF(a = 4) THEN
+			EXIT;
+		END;
+		WRITE a, " ";
+		a := a + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	a := 0; b := 1;
+	WHILE((a # 0) & ((5 DIV a) > 1)) DO
+		(*Hope for no divide by 0 fault*)
+	END;
+	WHILE((a = 0) OR ((5 DIV a) < 0)) DO
+		a := 1;
+		(*Hope for no divide by 0 fault*)
+	END;
+	a := 2;
+	WHILE(TRUE) DO
+		WHILE(TRUE) DO
+			WHILE(TRUE) DO
+				IF(a <= 0) THEN
+					EXIT;
+				ELSE
+					WRITE a, " ";
+					a := a - 1;
+				END;
+			END;
+			EXIT;
+		END;
+		IF(a <= -3) THEN
+			EXIT;
+		ELSE
+			WRITE a, " ";
+			a := a - 1;
+		END;		
+	END;	WRITE " == 2 1 0 -1 -2", NL;
+	
+	
+	
+	
+	WRITE NL, "*****PROCS/FUNCS - W/ PARAMS*****", NL;
+	a := 3; b := 5; b1 := FALSE; b2 := TRUE;
+	
+	p1(a, b, b1, b2); WRITE a, " == ", b, " AND ", b1, " == ", b2, " == ", "TRUE", NL;
+	a := 3; b1 := FALSE;
+	WRITE f1(a, b, b1, b2), " == ", b, " AND ", b1, " == ", b2, " == ", "TRUE", NL;
+	a := 3; b1 := FALSE;
+	bool := f2(a, b, b1, b2); WRITE a, " == ", b, " AND ", bool, " == ", b2, " == ", "TRUE", NL;
+	a := 3; b1 := FALSE;
+	WRITE f1(a, b, b1, TRUE OR FALSE), " == ", b, " AND ", b1, " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	a := 3; b1 := FALSE;
+	bool := f2(a, b, b1, TRUE OR FALSE); WRITE a, " == ", b, " AND ", bool, " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	a := 3; b1 := FALSE;
+	WRITE f1(a, b, b1, TRUE & FALSE), " == ", b, " AND ", b1, " == ", TRUE & FALSE, " == ", "FALSE", NL;
+	a := 3; b1 := FALSE;
+	bool := f2(a, b, b1, TRUE & FALSE); WRITE a, " == ", b, " AND ", bool, " == ", TRUE & FALSE, " == ", "FALSE", NL;
+	a := 3; b1 := FALSE;
+	WRITE f1(a, b, b1, 1 < 2), " == ", b, " AND ", b1, " == ", 1 < 2, " == ", "TRUE", NL;
+	a := 3; b1 := FALSE;
+	bool := f2(a, b, b1, 1 < 2); WRITE a, " == ", b, " AND ", bool, " == ", 1 < 2, " == ", "TRUE", NL;		
+	a := 3; b1 := FALSE;
+	
+	recurse(3);	WRITE " == 3 2 1 0", NL;
+	WRITE val(10) + val(10) + val(10) + val(10) + val(10), " == 50", NL;
+	
+	
+	
+END.

@@ -1,0 +1,42 @@
+
+VAR a,b,c :INTEGER;
+VAR	d,e,f : BOOLEAN ;
+
+PROCEDURE P1() : INTEGER ;
+VAR y : INTEGER;
+BEGIN
+	y := 5;
+RETURN y+5-1;
+END P1;
+
+PROCEDURE P2() : BOOLEAN ;
+VAR z : BOOLEAN;
+BEGIN
+	z := TRUE;
+RETURN z ;
+END P2;
+
+PROCEDURE P3() : BOOLEAN ;
+VAR v, u: INTEGER;
+BEGIN
+	v:= 10;
+	u := 5+2-1;
+RETURN v < u ;
+END P3;
+
+PROGRAM P
+BEGIN
+a:=1;
+b:= 4;
+WRITE "b = ", b, NL;
+
+c := P1();
+WRITE "c = ", c, NL;
+
+e := P2();
+WRITE "e = ", e, NL;
+
+f:= P3();
+WRITE "f = ", f, NL;
+
+END.

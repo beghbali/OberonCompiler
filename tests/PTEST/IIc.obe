@@ -1,0 +1,198 @@
+CONST one = 1;
+CONST two = ((1 + 2 * one - 1) * 2) DIV 2;
+CONST three = one + two;
+CONST string = "STRING CONSTANT";
+CONST true = ~~(TRUE & FALSE) OR ~~TRUE;
+CONST false = ~true;
+
+
+VAR x : INTEGER;
+
+
+
+
+PROCEDURE p1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN);
+BEGIN
+	x := y;
+	b1 := b2;
+END p1;
+
+PROCEDURE f1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : INTEGER;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN x;	
+END f1;
+
+PROCEDURE f2(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : BOOLEAN;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN b1;
+END f2;
+
+PROCEDURE val(x : INTEGER) : INTEGER;
+BEGIN
+	RETURN x;
+END val;
+
+PROCEDURE recurse(x : INTEGER) : INTEGER;
+BEGIN
+	WRITE x, " ";
+	IF(x = 0) THEN
+		RETURN 0;
+	END;
+	IF(x > 0) THEN
+		RETURN recurse(x - 1);
+	END;
+	IF(x < 0) THEN
+		RETURN recurse(x + 1);
+	END;
+END recurse;
+
+
+
+PROGRAM PHASEIIc
+	VAR x, y, z : INTEGER;
+	VAR T, F , bool, b1, b2 : BOOLEAN;
+	
+	VAR I : ARRAY 2 OF ARRAY 2 OF INTEGER;
+	VAR AI : ARRAY 10 OF INTEGER;
+	VAR AAAI : ARRAY 2 OF ARRAY 5 OF ARRAY 6 OF INTEGER;
+	VAR AB : ARRAY 10 OF BOOLEAN;
+	VAR AAAB : ARRAY 2 OF ARRAY 2 OF ARRAY 2 OF BOOLEAN;
+	
+	
+BEGIN
+
+	WRITE NL, "*****ARRAYS*****", NL;
+	I[0][0] := 0;
+	I[0][1] := 1;
+	I[1][0] := 2;
+	I[1][1] := 3;
+
+	AAAI[0][0][0] := 111;
+	AAAI[0][1][2] := 222;
+	AAAI[0][2][3] := 333;
+	AAAI[0][3][4] := 444;
+	AAAI[0][4][5] := 555;
+	
+	WRITE 1+AAAI[0][I[0][0]][I[0][0]]*2+11, " == 234", NL;
+	WRITE AAAI[0][I[0][1]][I[1][0]]+AAAI[0][I[0][1]][I[1][0]], " == 444", NL;
+	WRITE AAAI[0][I[1][0]][I[1][1]]+AAAI[0][I[1][0]][I[1][1]], " == 666", NL;
+	WRITE AAAI[0][I[1][1]][4]+AAAI[0][I[1][1]][4], " == 888", NL;
+	WRITE AAAI[0][4][5]+11+1, " == 567", NL;
+
+	AAAB[0][0][0] := FALSE;
+	AAAB[0][0][1] := TRUE;
+	AAAB[0][1][0] := TRUE;
+	AAAB[0][1][1] := FALSE;
+	AAAB[1][0][0] := TRUE;
+	AAAB[1][0][1] := FALSE;
+	AAAB[1][1][0] := FALSE;
+	AAAB[1][1][1] := FALSE;
+	
+	WRITE AAAB[0][0][0], " == FALSE", NL;
+	WRITE AAAB[0][0][1], " == TRUE", NL;
+	WRITE AAAB[0][1][0], " == TRUE", NL;
+	WRITE AAAB[0][1][1], " == FALSE", NL;
+	WRITE AAAB[1][0][0], " == TRUE", NL;
+	WRITE AAAB[1][0][1], " == FALSE", NL;
+	WRITE AAAB[1][1][0], " == FALSE", NL;
+	WRITE AAAB[1][1][1], " == FALSE", NL;
+
+
+
+
+	WRITE NL, "*****CONTROL STATEMENTS*****", NL;
+	AI[2] := 0; AAAI[1][2][3] := 5;
+	IF((AI[2] # 0) & ((AAAI[1][2][3] DIV AI[2]) > 1)) THEN	WRITE "FAIL short circuit evaluation...", NL;
+	ELSE	WRITE "PASS short circuit evaluation...", NL;
+	END;
+	IF((AI[2] = 0) OR ((AAAI[1][2][3] DIV AI[2]) > 1)) THEN	WRITE "PASS short circuit evaluation...", NL;
+	ELSE	WRITE "FAIL short circuit evaluation...", NL;
+	END;	
+
+	
+	AI[2] := 0;
+	WHILE(AI[2] <= 3) DO
+		WRITE AI[2], " ";
+		AI[2] := AI[2] + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+
+	AI[2] := 0;
+	WHILE(AI[2] # 4) DO
+		WRITE AI[2], " ";
+		AI[2] := AI[2] + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	
+	AI[2] := 0;
+	WHILE(TRUE) DO
+		IF(AI[2] = 4) THEN
+			EXIT;
+		END;
+		WRITE AI[2], " ";
+		AI[2] := AI[2] + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	AI[2] := 0; AAAI[1][2][3] := 5;
+	WHILE((AI[2] # 0) & ((AAAI[1][2][3] DIV AI[2]) > 1)) DO
+		(*Hope for no divide by 0 fault*)
+	END;
+	WHILE((AI[2] = 0) OR ((AAAI[1][2][3] DIV AI[2]) < 0)) DO
+		AI[2] := 1;
+		(*Hope for no divide by 0 fault*)
+	END;
+	AI[2] := 2;
+	WHILE(TRUE) DO
+		WHILE(TRUE) DO
+			WHILE(TRUE) DO
+				IF(AI[2] <= 0) THEN
+					EXIT;
+				ELSE
+					WRITE AI[2], " ";
+					AI[2] := AI[2] - 1;
+				END;
+			END;
+			EXIT;
+		END;
+		IF(AI[2] <= -3) THEN
+			EXIT;
+		ELSE
+			WRITE AI[2], " ";
+			AI[2] := AI[2] - 1;
+		END;		
+	END;	WRITE " == 2 1 0 -1 -2", NL;
+	
+
+	
+	
+	
+	WRITE NL, "*****PROCS/FUNCS - W/ PARAMS*****", NL;
+	AI[2] := 3; AAAI[1][2][3] := 5; AB[2] := FALSE; AAAB[1][0][1] := TRUE;
+	
+	p1(AI[2], AAAI[1][2][3], AB[2], AAAB[1][0][1]); WRITE AI[2], " == ", AAAI[1][2][3], " AND ", AB[2], " == ", AAAB[1][0][1], " == ", "TRUE", NL;
+	AI[2] := 3; AB[2] := FALSE;
+	WRITE f1(AI[2], AAAI[1][2][3], AB[2], AAAB[1][0][1]), " == ", AAAI[1][2][3], " AND ", AB[2], " == ", AAAB[1][0][1], " == ", "TRUE", NL;
+	AI[2] := 3; AB[2] := FALSE;
+	bool := f2(AI[2], AAAI[1][2][3], AB[2], AAAB[1][0][1]); WRITE AI[2], " == ", AAAI[1][2][3], " AND ", bool, " == ", AAAB[1][0][1], " == ", "TRUE", NL;
+	AI[2] := 3; AB[2] := FALSE;
+	WRITE f1(AI[2], AAAI[1][2][3], AB[2], TRUE OR FALSE), " == ", AAAI[1][2][3], " AND ", AB[2], " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	AI[2] := 3; AB[2] := FALSE;
+	bool := f2(AI[2], AAAI[1][2][3], AB[2], TRUE OR FALSE); WRITE AI[2], " == ", AAAI[1][2][3], " AND ", bool, " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	AI[2] := 3; AB[2] := FALSE;
+	WRITE f1(AI[2], AAAI[1][2][3], AB[2], TRUE & FALSE), " == ", AAAI[1][2][3], " AND ", AB[2], " == ", TRUE & FALSE, " == ", "FALSE", NL;
+	AI[2] := 3; AB[2] := FALSE;
+	bool := f2(AI[2], AAAI[1][2][3], AB[2], TRUE & FALSE); WRITE AI[2], " == ", AAAI[1][2][3], " AND ", bool, " == ", TRUE & FALSE, " == ", "FALSE", NL;	
+	AI[2] := 3; AB[2] := FALSE;
+	WRITE f1(AI[2], AAAI[1][2][3], AB[2], 1 < 2), " == ", AAAI[1][2][3], " AND ", AB[2], " == ", 1 < 2, " == ", "TRUE", NL;
+	AI[2] := 3; AB[2] := FALSE;
+	bool := f2(AI[2], AAAI[1][2][3], AB[2], 1 < 2); WRITE AI[2], " == ", AAAI[1][2][3], " AND ", bool, " == ", 1 < 2, " == ", "TRUE", NL;		
+
+	AAAI[2][3][4] := 3;
+	recurse(AAAI[2][3][4]);	WRITE " == 3 2 1 0", NL;
+	AI[3] := 2;
+	AAAI[2][AAAI[2][3][4]][AI[3]] := 5;
+	x := AAAI[2][AAAI[2][3][4]][AI[3]];
+	WRITE val(AAAI[2][AAAI[2][3][4]][AI[3]]+AAAI[2][AAAI[2][3][4]][AI[3]]) + val(AAAI[2][AAAI[2][3][4]][AI[3]]*2) + val(10) + val(10) + val(10), " == 50", NL;
+
+END.

@@ -1,0 +1,63 @@
+(* print mulitplication matrix *)
+
+PROCEDURE printlabel;
+  VAR x:INTEGER;
+  BEGIN
+    x := 0;
+
+    WRITE "   ";
+    WHILE x < 10
+      DO
+        WRITE x,"  ";
+        x := x + 1;
+      END;
+
+    WRITE NL;
+END printlabel;
+
+PROCEDURE printseperater();
+VAR x:INTEGER;
+BEGIN
+  x := 9;
+  WRITE "   ";
+  WHILE x >= 0
+  DO
+    WRITE "-  ";
+    x := x - 1;
+  END;
+
+  WRITE NL;
+END printseperater;
+
+PROGRAM main
+VAR x, y:INTEGER;
+VAR mul:INTEGER;
+BEGIN
+
+  x := 0;
+  y := 0;
+
+  printlabel();
+  printseperater();
+  WHILE(x < 10)
+  DO
+    WRITE x,"| ";
+    WHILE(y < 10)
+    DO
+      mul := x * y;
+      WRITE mul;
+      IF (mul >= 10)
+      THEN
+        WRITE " ";
+      ELSE
+        WRITE "  ";
+      END;
+      y := y + 1;
+    END;
+    y := 0;
+    WRITE NL;
+    x := x + 1;
+  END;
+END.
+
+

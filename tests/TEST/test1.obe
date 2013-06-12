@@ -1,0 +1,14 @@
+VAR x : INTEGER;
+CONST something = 3*2+1;
+
+PROGRAM test1
+VAR y : INTEGER;
+VAR x : INTEGER;
+BEGIN
+	y := 5;
+	x := something+2-3;
+	x := x + y - something;
+	WRITE x, NL;
+	WRITE y, NL;
+
+END.

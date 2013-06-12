@@ -1,0 +1,100 @@
+ (***************************************************************
+ *  qsort.obe:  a syntactically legal oberon sorting program 
+ ****************************************************************
+ *  Software Engineer:  Bryan CHiang
+ *  Date: 03/12/2002
+ ****************************************************************)
+CONST n = 15;
+TYPE array10Int = ARRAY n OF INTEGER;
+VAR tmp:INTEGER;a : ARRAY n OF INTEGER;
+
+
+PROCEDURE swap(VAR u,v : INTEGER);
+   VAR temp : INTEGER;
+   BEGIN
+     (* WRITE "Swapping ",u," ",v,NL; *)
+      temp := u;
+      u := v;
+      v := temp;
+
+     (* WRITE "u is ",u,NL;
+        WRITE "v is ",v,NL;  *)
+END swap; (* end of swap *)
+
+
+PROCEDURE partition(lo0,hi0:INTEGER; VAR lo,hi:INTEGER);
+	VAR mid : INTEGER;
+	BEGIN
+          mid := a[ (lo0+hi0) DIV 2 ];
+          WHILE( lo <= hi )
+          DO
+            WHILE ( (lo < hi0) & (a[lo] < mid))
+            DO
+              lo := lo + 1;
+            END;
+            WHILE ( (hi > lo0) & ( a[hi] > mid ))
+            DO
+              hi := hi-1;
+            END;
+
+            IF lo <= hi
+            THEN
+              swap(a[lo],a[hi]);
+              lo := lo + 1;
+              hi := hi -1;
+            END;
+          END;
+END partition; (* end of partition  *)
+
+
+PROCEDURE qsort(lo0,hi0 : INTEGER);
+	VAR lo,hi:INTEGER;
+	BEGIN
+         lo := lo0;
+         hi := hi0;
+	IF lo0 < hi0 THEN
+	  partition(lo0,hi0,lo,hi);
+	   IF lo0 < hi THEN
+	     qsort(lo0,hi);
+	   END;
+	   IF lo < hi0 THEN
+	       qsort(lo,hi0);
+	   END;
+	END;
+END qsort; (* end of qsort *)
+
+
+PROCEDURE  printArray();
+      VAR index : INTEGER;
+      BEGIN
+        index := 0;
+	WRITE "  Array = [";
+        WHILE (index < n) DO
+	   WRITE a[index];
+	   index := index + 1;
+	   IF(index < n) THEN
+	      WRITE ",";
+	   ELSE
+	      WRITE "]",NL;
+	   END;
+	END;
+END printArray; (* end of printArray()  *)
+
+
+
+PROGRAM quick 
+
+BEGIN
+
+        WRITE "Initialize the arrays",NL;
+        a[0] := 45;  a[1] := 34; a[2] := 228; a[3] := 25; a[4] := 3;  a[5] := 5;  a[6] := 64;
+	a[7] := 15;  a[8] := 28; a[9] := 15;  a[10] := 14;  a[11] := 32;  a[12] := 45;
+	a[13] := 65;  a[14] := 227;
+	WRITE "The array before sorting is:",NL;
+        printArray();
+        WRITE "Now we sort the numbers using qsort",NL;
+        qsort(0,n-1);
+	printArray();
+
+
+END. 

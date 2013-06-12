@@ -1,0 +1,171 @@
+TYPE PR = 
+	POINTER TO RECORD
+		
+		a, b, c : INTEGER;
+		T, F , bool, b1, b2 : BOOLEAN;
+	
+		AI : ARRAY 10 OF INTEGER;
+		AAI : ARRAY 10 OF ARRAY 10 OF INTEGER;
+		AB : ARRAY 10 OF BOOLEAN;
+		AAB : ARRAY 10 OF ARRAY 10 OF BOOLEAN;
+		
+	END;
+
+
+
+CONST one = 1;
+CONST two = ((1 + 2 * one - 1) * 2) DIV 2;
+CONST three = one + two;
+CONST string = "STRING CONSTANT";
+CONST true = ~~(TRUE & FALSE) OR ~~TRUE;
+CONST false = ~true;
+
+
+VAR x : INTEGER;
+
+
+
+
+PROCEDURE p1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN);
+BEGIN
+	x := y;
+	b1 := b2;
+END p1;
+
+PROCEDURE f1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : INTEGER;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN x;	
+END f1;
+
+PROCEDURE f2(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : BOOLEAN;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN b1;
+END f2;
+
+PROCEDURE val(x : INTEGER) : INTEGER;
+BEGIN
+	RETURN x;
+END val;
+
+PROCEDURE recurse(x : INTEGER) : INTEGER;
+BEGIN
+	WRITE x, " ";
+	IF(x = 0) THEN
+		RETURN 0;
+	END;
+	IF(x > 0) THEN
+		RETURN recurse(x - 1);
+	END;
+	IF(x < 0) THEN
+		RETURN recurse(x + 1);
+	END;
+END recurse;
+
+
+	VAR rec : PR;
+PROGRAM PHASEIIIb
+
+BEGIN
+
+	NEW(rec);
+
+	WRITE NL, "*****CONTROL STATEMENTS*****", NL;
+	IF(1<2) THEN	WRITE "1<2";
+	ELSE	WRITE "1!<2";
+	END;	WRITE " == 1<2", NL;
+	IF(1>2) THEN	WRITE "1>2";
+	ELSE	WRITE "1!>2";
+	END;	WRITE " == 1!>2", NL;
+	rec.a := 0; rec.b := 1;
+	IF((rec.a # 0) & ((5 DIV rec.a) > 1)) THEN	WRITE "FAIL short circuit evaluation...", NL;
+	ELSE	WRITE "PASS short circuit evaluation...", NL;
+	END;
+	IF((rec.a = 0) OR ((5 DIV rec.a) > 1)) THEN	WRITE "PASS short circuit evaluation...", NL;
+	ELSE	WRITE "FAIL short circuit evaluation...", NL;
+	END;	
+
+	
+	rec.a := 0;
+	WHILE(rec.a <= 3) DO
+		WRITE rec.a, " ";
+		rec.a := rec.a + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+
+	rec.a := 0;
+	WHILE(rec.a # 4) DO
+		WRITE rec.a, " ";
+		rec.a := rec.a + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	
+	rec.a := 0;
+	WHILE(TRUE) DO
+		IF(rec.a = 4) THEN
+			EXIT;
+		END;
+		WRITE rec.a, " ";
+		rec.a := rec.a + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	rec.a := 0; rec.b := 1;
+	WHILE((rec.a # 0) & ((5 DIV rec.a) > 1)) DO
+		(*Hope for no divide by 0 fault*)
+	END;
+	WHILE((rec.a = 0) OR ((5 DIV rec.a) < 0)) DO
+		rec.a := 1;
+		(*Hope for no divide by 0 fault*)
+	END;
+	rec.a := 2;
+	WHILE(TRUE) DO
+		WHILE(TRUE) DO
+			WHILE(TRUE) DO
+				IF(rec.a <= 0) THEN
+					EXIT;
+				ELSE
+					WRITE rec.a, " ";
+					rec.a := rec.a - 1;
+				END;
+			END;
+			EXIT;
+		END;
+		IF(rec.a <= -3) THEN
+			EXIT;
+		ELSE
+			WRITE rec.a, " ";
+			rec.a := rec.a - 1;
+		END;		
+	END;	WRITE " == 2 1 0 -1 -2", NL;
+	
+	
+	
+	
+	WRITE NL, "*****PROCS/FUNCS - W/ PARAMS*****", NL;
+	rec.a := 3; rec.b := 5; rec.b1 := FALSE; rec.b2 := TRUE;
+	
+	p1(rec.a, rec.b, rec.b1, rec.b2); WRITE rec.a, " == ", rec.b, " AND ", rec.b1, " == ", rec.b2, " == ", "TRUE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	WRITE f1(rec.a, rec.b, rec.b1, rec.b2), " == ", rec.b, " AND ", rec.b1, " == ", rec.b2, " == ", "TRUE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	rec.bool := f2(rec.a, rec.b, rec.b1, rec.b2); WRITE rec.a, " == ", rec.b, " AND ", rec.bool, " == ", rec.b2, " == ", "TRUE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	WRITE f1(rec.a, rec.b, rec.b1, TRUE OR FALSE), " == ", rec.b, " AND ", rec.b1, " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	rec.bool := f2(rec.a, rec.b, rec.b1, TRUE OR FALSE); WRITE rec.a, " == ", rec.b, " AND ", rec.bool, " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	WRITE f1(rec.a, rec.b, rec.b1, TRUE & FALSE), " == ", rec.b, " AND ", rec.b1, " == ", TRUE & FALSE, " == ", "FALSE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	rec.bool := f2(rec.a, rec.b, rec.b1, TRUE & FALSE); WRITE rec.a, " == ", rec.b, " AND ", rec.bool, " == ", TRUE & FALSE, " == ", "FALSE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	WRITE f1(rec.a, rec.b, rec.b1, 1 < 2), " == ", rec.b, " AND ", rec.b1, " == ", 1 < 2, " == ", "TRUE", NL;
+	rec.a := 3; rec.b1 := FALSE;
+	rec.bool := f2(rec.a, rec.b, rec.b1, 1 < 2); WRITE rec.a, " == ", rec.b, " AND ", rec.bool, " == ", 1 < 2, " == ", "TRUE", NL;		
+	rec.a := 3; rec.b1 := FALSE;
+	
+	recurse(3);	WRITE " == 3 2 1 0", NL;
+	WRITE val(10) + val(10) + val(10) + val(10) + val(10), " == 50", NL;
+	
+	
+	
+END.

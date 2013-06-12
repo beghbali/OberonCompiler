@@ -1,0 +1,15 @@
+VAR dmode : ARRAY 10 OF INTEGER;
+VAR dform : ARRAY 5 OF INTEGER;
+VAR x : INTEGER;
+
+PROGRAM test5
+BEGIN
+        x := 0;
+        WHILE (x < 10) DO
+                dmode[x] := x * x;
+                WRITE dmode[x] ;
+                WRITE " ";
+                x := x + 1;
+        END;
+        WRITE NL;
+END.

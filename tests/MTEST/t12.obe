@@ -1,0 +1,31 @@
+VAR i, x, y : INTEGER;
+PROGRAM P
+BEGIN
+
+x:= 1;
+y:= 2;
+i :=0;
+IF x >= y
+THEN
+	WRITE " in if ", NL;
+	IF x < 3
+	THEN
+		WRITE " x is less ", NL;
+	END;
+ELSE
+	WRITE "ONE: in else ", NL;
+	IF y >= 2
+	THEN
+		WRITE "TWO: y is greater or equals to 2 ", NL;
+		
+		IF i < 2
+		THEN
+			WRITE "THREE, i is less then 2", NL; 
+		END;
+	END;
+END;
+
+WRITE "DONE", NL;
+
+END.
+

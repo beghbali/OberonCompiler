@@ -1,0 +1,17 @@
+VAR a, b: INTEGER;
+PROGRAM P
+BEGIN
+	a := 20;
+	b := 10;
+	 a := a * b; 
+	WRITE " a*b = ", a  , NL;
+	
+	a := a DIV b; 
+	WRITE " a/10 = ", a DIV b, NL;
+	
+	b := b MOD 3;
+	WRITE " b MOD 3 = ", b, NL;
+	
+	WRITE  " " , 5, NL;
+END.
+

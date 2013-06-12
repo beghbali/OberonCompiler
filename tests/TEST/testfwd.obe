@@ -1,0 +1,5 @@
+PROCEDURE ^p ();
+
+PROGRAM main
+BEGIN
+END.

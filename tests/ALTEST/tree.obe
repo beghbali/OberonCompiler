@@ -1,0 +1,67 @@
+VAR value : INTEGER;
+
+TYPE node = POINTER TO RECORD
+    value : INTEGER;
+    children : ARRAY 10 OF node;
+END;
+
+PROCEDURE (this : node) getValue() : INTEGER;
+BEGIN
+    RETURN this.value;
+END getValue;
+
+PROCEDURE (this : node) insertValue(value : INTEGER);
+BEGIN
+    this.value := value;
+END insertValue;
+
+PROCEDURE buildTree(thisnode : node; depth : INTEGER; numchildren : INTEGER);
+    VAR count : INTEGER;
+BEGIN
+    IF (depth > 0) THEN
+        count := 0; 
+        WHILE (count < numchildren) DO
+            NEW(thisnode.children[count]);
+            count := count + 1;
+        END;
+        count := 0; 
+        WHILE (thisnode.children[count] # NIL) DO
+            buildTree(thisnode.children[count], depth - 1, numchildren);
+            count := count + 1;
+        END;
+    END;
+END buildTree;
+
+PROCEDURE populate(thisnode : node);
+    VAR count : INTEGER;
+BEGIN
+    thisnode.insertValue(value);
+    count := 0; 
+    WHILE (thisnode.children[count] # NIL) DO
+        value := value - 1;
+        populate(thisnode.children[count]);
+        count := count + 1;
+    END;
+END populate;
+
+PROCEDURE traverse(thisnode : node);
+    VAR count : INTEGER;
+BEGIN
+    count := 0; 
+    WRITE thisnode.getValue();
+    WRITE NL;
+    WHILE (thisnode.children[count] # NIL) DO
+        traverse(thisnode.children[count]);
+        count := count + 1;
+    END;
+END traverse;
+
+PROGRAM tree
+    VAR root : node;
+BEGIN
+    value := 100;
+    NEW(root);
+    buildTree(root, 3, 4);
+    populate(root);
+    traverse(root);
+END.

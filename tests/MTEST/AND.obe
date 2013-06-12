@@ -1,0 +1,20 @@
+PROGRAM s15a
+  
+
+VAR b1, b2 : BOOLEAN;
+VAR x, y : INTEGER;
+BEGIN
+	x := 6;
+	y := 0;
+  	b1 := TRUE;
+	b2 := FALSE;
+	
+	IF  FALSE & ( (x DIV 0) > 3) THEN
+		WRITE "1", NL;
+	ELSE
+		WRITE "0", NL;
+	END;
+	WRITE "OUT ", NL;
+END.
+
+

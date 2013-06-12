@@ -1,0 +1,82 @@
+TYPE REC = RECORD 
+		next : POINTER TO REC;
+		value: INTEGER;
+	   END;
+TYPE PTR = POINTER TO REC;
+
+PROCEDURE dontchange(x : PTR);
+BEGIN
+	x := NIL;
+END dontchange;
+
+PROCEDURE dochange(VAR x : PTR);
+BEGIN
+	x := NIL;
+END dochange;
+
+PROCEDURE changevalue(v : INTEGER);
+BEGIN
+	v := 99;
+END changevalue;
+
+PROCEDURE dontchangevalue(VAR v : INTEGER);
+BEGIN
+	v := 99;
+END dontchangevalue;
+
+PROCEDURE (this : PTR) print();
+BEGIN
+	WRITE "Object = ", this , "\tValue = ", this.value, NL;
+END print;
+
+PROCEDURE (this : PTR) getValue() : INTEGER;
+BEGIN
+	RETURN this.value;
+END getValue;
+
+PROGRAM main
+VAR b : BOOLEAN;
+VAR ptr : PTR;
+VAR x : INTEGER;
+VAR a : ARRAY 3 OF INTEGER;
+BEGIN
+	NEW(ptr);
+	WRITE ptr,NL;
+	WRITE NIL,NL;
+	WRITE "enter number:";
+	READ a[2];	
+	WRITE "a[2]=", a[2],NL;
+	WRITE "before: ptr.value=",ptr.value, NL;
+	ptr.value := 5;
+	WRITE "after: ptr.value=",ptr.value, "==5",NL;
+	WRITE "before: ptr.next=",ptr.next, "==0",NL;
+	NEW(ptr.next);
+	WRITE "after: ptr.next=",ptr.next, NL;	
+	WRITE "before: ptr.next.value=",ptr.next.value, "==0",NL;
+	ptr.next.value := 99;
+	WRITE "after: ptr.value=",ptr.value, "==5",NL;
+	WRITE "before: ptr.next.value=",ptr.next.value,"==99", NL;
+	ptr.next := NIL;
+	WRITE "ptr.next=",ptr.next,"==NIL",NL;
+	NEW(ptr.next);
+	NEW(ptr.next.next);
+	ptr.next.value := 3;
+	ptr.next.next.value := 4;
+	ptr.value := ptr.next.value + ptr.next.next.value;
+	WRITE "ptr.next.value=",ptr.next.value,"==3",NL;
+	WRITE "ptr.next.next.value=",ptr.next.next.value,"==4",NL;
+	WRITE "ptr.value=",ptr.value,"==7",NL;
+	dontchange(ptr.next);
+	WRITE "ptr.next=",ptr.next,"==Not NIL",NL;
+	dochange(ptr.next.next);
+	WRITE "ptr.next.next=",ptr.next.next,"==NIL",NL;
+	changevalue(ptr.next.value);
+	WRITE "ptr.next.value=",ptr.next.value,"==3",NL;
+	dontchangevalue(ptr.next.value);
+	WRITE "ptr.next.value=",ptr.next.value,"==99",NL;
+	WRITE "starting object printing:",NL;
+	ptr.print();
+	ptr.next.print;
+	WRITE "ending object printing",NL;
+	WRITE "ptr.next.getValue()=",ptr.next.getValue(),"==99",NL;
+END.

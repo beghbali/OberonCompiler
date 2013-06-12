@@ -1,0 +1,56 @@
+echo "PTEST/I.obe"
+oberon PTEST/I.obe
+make compile
+a.out
+echo "PTEST/IIa.obe"
+oberon PTEST/IIa.obe
+make compile
+a.out
+echo "PTEST/IIb.obe"
+oberon PTEST/IIb.obe
+make compile
+a.out
+echo "PTEST/IIc.obe"
+oberon PTEST/IIc.obe
+make compile
+a.out
+echo "PTEST/IIIa.obe"
+oberon PTEST/IIIa.obe
+make compile
+a.out
+echo "PTEST/IIIb.obe"
+oberon PTEST/IIIb.obe
+make compile
+a.out
+echo "PTEST/IIIc.obe"
+oberon PTEST/IIIc.obe
+make compile
+a.out
+echo "PTEST/IIId.obe"
+oberon PTEST/IIId.obe
+make compile
+a.out
+echo "PTEST/guess.obe"
+oberon PTEST/guess.obe
+make compile
+a.out
+echo "PTEST/qs.obe"
+oberon PTEST/qs.obe
+make compile
+a.out
+echo "PTEST/bs.obe"
+oberon PTEST/bs.obe
+make compile
+a.out
+echo "PTEST/div.obe"
+oberon PTEST/div.obe
+make compile
+a.out
+echo "PTEST/t.obe"
+oberon PTEST/t.obe
+make compile
+a.out
+echo "PTEST/stack.obe"
+oberon PTEST/stack.obe
+make compile
+a.out

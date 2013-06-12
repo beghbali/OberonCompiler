@@ -1,0 +1,220 @@
+TYPE ARR = ARRAY 10 OF ARRAY 10 OF INTEGER;
+
+TYPE PR = 
+	POINTER TO RECORD
+		
+		i : INTEGER;
+		b : BOOLEAN;
+		
+		AI : ARRAY 10 OF INTEGER;
+		AAI : ARR;
+		
+		AB : ARRAY 10 OF BOOLEAN;
+		AAB : ARRAY 10 OF ARRAY 10 OF BOOLEAN;		
+		
+		pr : PR;
+		AP : ARRAY 10 OF PR;
+		AAP : ARRAY 10 OF ARRAY 10 OF PR;
+	END;
+	
+	
+	
+	
+
+PROCEDURE (class : PR) seti(i : INTEGER);
+BEGIN
+	class.i := i;
+END seti;
+
+PROCEDURE (class : PR) setb(b : BOOLEAN);
+BEGIN
+	class.b := b;
+END setb;
+
+PROCEDURE (class : PR) geti() : INTEGER;
+BEGIN
+	RETURN class.i;
+END geti;
+
+PROCEDURE (class : PR) getb() : BOOLEAN;
+BEGIN
+	RETURN class.b;
+END getb;
+
+PROCEDURE (class : PR) setAlli(i : INTEGER);
+BEGIN
+	class.i := i;
+	IF(class.pr # NIL) THEN
+		class.pr.setAlli(i);
+	END;
+END setAlli;
+
+PROCEDURE (class : PR) setAllb(b : BOOLEAN);
+BEGIN
+	class.b := b;
+	IF(class.pr # NIL) THEN
+		class.pr.setAllb(b);
+	END;	
+END setAllb;
+
+
+PROCEDURE (class : PR) copyRec(VAR rec : PR) : PR;
+BEGIN
+	class.i := rec.i;
+	class.b := rec.getb();
+	RETURN class;
+END copyRec;
+
+
+
+
+
+
+PROCEDURE (class : PR) clear1(VAR rec1 : PR; rec2 : PR);
+BEGIN
+	NEW(rec1);
+	NEW(rec2);
+END clear1;
+
+PROCEDURE (class : PR) clear2(VAR rec1 : PR; rec2 : PR);
+BEGIN
+	rec1.i := -1;
+	rec1.b := FALSE;
+	rec2.i := -1;
+	rec2.b := FALSE;
+END clear2;
+
+	
+PROCEDURE (class : PR) foo(x : PR) : INTEGER;
+BEGIN
+	RETURN x.i + 1;
+END foo;
+
+PROCEDURE (class : PR) foo2(x : INTEGER) : PR;
+BEGIN
+	class.i := x;
+	RETURN class;
+END foo2;	
+	
+	
+	
+	
+PROCEDURE (class : PR) initAAI();
+	VAR i : INTEGER;
+BEGIN
+	i := 0;
+	WHILE(i<10) DO
+		class.AAI[i][i] := i;
+		i := i+1;
+	END;
+END initAAI;
+	
+PROCEDURE (class : PR) listAAI();	
+	VAR i : INTEGER;
+BEGIN
+	i := 0;
+	WRITE "AAP: ";
+	WHILE(i<10) DO
+		WRITE class.AAI[i][i], " ";
+		i := i+1;
+	END;
+	WRITE NL;
+END listAAI;	
+	
+PROCEDURE (class : PR) copyAAI(VAR A : ARR);
+	VAR i : INTEGER;
+BEGIN
+	i := 0;
+	WHILE(i<10) DO
+		class.AAI[i][i] := A[i][i];
+		i := i+1;
+	END;
+END copyAAI;	
+	
+PROCEDURE (class : PR) addAAI() : INTEGER;
+	VAR i : INTEGER;
+	VAR sum : INTEGER;
+BEGIN
+	i := 0;
+	sum := 0;
+	WHILE(i<10) DO
+		sum := sum + class.AAI[i][i];
+		i := i+1;
+	END;
+	RETURN sum;
+END addAAI;	
+	
+	
+	
+	
+	VAR rec : PR;
+	VAR a, b, c : PR;	
+PROGRAM PHASEIIIc
+
+BEGIN
+
+	WRITE NL, "*****TYPE BOUND PROCS - INT/BOOL FIELDS*****", NL;
+	NEW(rec);
+	NEW(rec.pr);
+	NEW(rec.pr.pr);
+
+	rec.seti(100);
+	WRITE rec.i, " == ", 100, NL;
+	
+	rec.setAlli(200);
+	rec.foo(rec);
+	rec.foo(rec);
+	
+	WRITE rec.i, " == ", rec.pr.i, " == ", rec.pr.pr.i, " == ", 100, NL;
+	
+	rec.setAllb(TRUE);
+	WRITE rec.b, " == ", rec.pr.b, " == ", rec.pr.pr.b, " == ", TRUE, NL;
+	
+	WRITE NL;
+	
+	NEW(a);
+	NEW(b);
+	NEW(c);
+	
+	b.i := 300;
+	b.b := TRUE;
+	
+	c := a.copyRec(b);
+	WRITE a.i, " == ", c.i, " == ", 300, NL;
+	WRITE a.b, " == ", c.b, " == ", TRUE, NL;
+	
+	WRITE NL, "*****TYPE BOUND PROCS - POINTER FIELDS*****", NL;
+	NEW(a);
+	NEW(b);
+	
+	a.i := 222; a.b := TRUE; b.i := 222; b.b := TRUE;
+	a.clear1(a, b); 
+	WRITE a.i, " ", a.b, " == ", 0, " ", "FALSE", NL;
+	WRITE b.i, " ", b.b, " == ", 222, " ", "TRUE", NL;
+	
+	a.i := 222; a.b := TRUE; b.i := 222; b.b := TRUE;
+	a.clear2(a, b); 
+	WRITE a.i, " ", a.b, " == ", b.i, " ", b.b, " == ", -1, " ", "FALSE", NL;
+	
+	NEW(rec);
+	WRITE rec.foo(rec.foo2(5)), " == ", 6, NL;	
+	
+
+	WRITE NL, "*****TYPE BOUND PROCS - ARRAY FIELDS*****", NL;	
+	NEW(a);
+	NEW(a.pr);
+	NEW(a.AAP[1][2]);
+	NEW(a.AAP[2][3]);
+	
+	
+	a.pr.initAAI();
+	a.pr.listAAI();
+	a.AAP[1][2].initAAI();
+	a.AAP[1][2].listAAI();
+	
+	a.AAP[2][3].copyAAI(a.AAP[1][2].AAI);
+	a.AAP[2][3].listAAI();
+	
+	WRITE a.AAP[2][3].addAAI() + a.AAP[2][3].addAAI(), " == ", 90, NL;
+	
+END.

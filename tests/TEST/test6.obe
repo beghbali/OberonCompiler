@@ -1,0 +1,11 @@
+PROGRAM main
+VAR a,b : INTEGER;
+BEGIN
+	a := 0;
+	b := 2;
+	IF((((a < 2) OR (b=2)) & (a = 1)) & ((b DIV a) > 1)) THEN
+		WRITE "IN IF",NL;
+	ELSE
+		WRITE "IN ELSE", NL;
+	END;
+END.

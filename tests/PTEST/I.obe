@@ -1,0 +1,138 @@
+CONST one = 1;
+CONST two = one + one;
+CONST three = one + two;
+
+VAR x : INTEGER;
+
+
+PROCEDURE p1();
+BEGIN
+	WRITE "In p1";
+END p1;
+
+PROCEDURE p2();
+BEGIN
+	WRITE "In p2";
+END p2;
+
+PROCEDURE p3();
+BEGIN
+	WRITE "In p3";
+END p3;
+
+PROCEDURE f1() : INTEGER;
+BEGIN
+	WRITE "In f1";
+	RETURN 1;
+END f1;
+
+PROCEDURE f2() : INTEGER;
+BEGIN
+	WRITE "In f2";
+	RETURN one;
+END f2;
+
+PROCEDURE f3() : INTEGER;
+	VAR x : INTEGER;
+BEGIN
+	x := 1;
+	WRITE "In f3";
+	RETURN x;
+END f3;
+
+PROCEDURE ten() : INTEGER;
+BEGIN
+	RETURN 1+1+one+two+three+2;
+END ten;
+
+PROCEDURE nine() : INTEGER;
+BEGIN
+	RETURN ten() - one;
+END nine;
+
+PROCEDURE eight() : INTEGER;
+BEGIN
+	RETURN nine() - one;
+END eight;
+
+PROCEDURE doublex();
+BEGIN
+	x := x + x;
+END doublex;
+
+
+PROGRAM PHASEI
+	VAR a, b, c : INTEGER;
+BEGIN
+
+
+	WRITE NL, "*****LITERALS & CONSTS*****", NL;
+	WRITE one, " == ", 1, NL;
+	WRITE two, " == ", 2, NL;
+	WRITE three, " == ", 3, NL;
+	WRITE 1+1+2, " == ", 4, NL;
+	WRITE two+3, " == ", 5, NL;
+	x := one;	WRITE x, " == ", 1, NL;
+	x := two;	WRITE x, " == ", 2, NL;
+	x := three;	WRITE x, " == ", 3, NL;
+	x := 1+1+2;	WRITE x, " == ", 4, NL;
+	x := two+3;	WRITE x, " == ", 5, NL;
+	
+	
+	WRITE NL, "*****EXPR W/ + & -*****", NL;
+	a := 3; b := 5; c := 6;
+	WRITE a+b+c, " == ", 14, NL;
+	WRITE a+b-c, " == ", 2, NL;
+	WRITE a+a+a+b+b+b+c+c+c, " == ", 42, NL;
+	WRITE -a-a-a-b-b-b-c-c-c, " == ", -42, NL;
+	x := a+b+c; WRITE x, " == ", 14, NL;
+	x := a+b-c; WRITE x, " == ", 2, NL;
+	x := a+a+a+b+b+b+c+c+c; WRITE x, " == ", 42, NL;
+	x := -a-a-a-b-b-b-c-c-c; WRITE x, " == ", -42, NL;
+	
+	
+	WRITE NL, "*****IF STMT*****", NL;
+	a := 1; b := 2;
+	WRITE "1<2 == ";	IF(1<2) THEN	WRITE 1, "<", 2, NL;	END;
+	WRITE "1<2 == ";	IF(a<b) THEN	WRITE a, "<", b, NL;	END;
+	WRITE "1<2 == ";	IF(one<two) THEN	WRITE one, "<", two, NL;	END;
+	WRITE "1<2 == ";	IF(a<two) THEN		WRITE a, "<", two, NL;	END;
+	WRITE "1<2 == ";	IF(one<b) THEN		WRITE one, "<", b, NL;	END;
+	WRITE "1<2 == ";	IF(1<two) THEN		WRITE 1, "<", two, NL;	END;
+	WRITE "1<2 == ";	IF(one<2) THEN		WRITE one, "<", 2, NL;	END;
+	WRITE "1<2 == ";	IF(1<b) THEN		WRITE 1, "<", b, NL;	END;
+	WRITE "1<2 == ";	IF(a<2) THEN		WRITE a, "<", 2, NL;	END;
+	a := 1; b := 2;
+	IF(2<1) THEN	WRITE 2, "<", 1, NL;	END;	WRITE " <== should be empty", NL;
+	IF(b<a) THEN	WRITE b, "<", a, NL;	END;	WRITE " <== should be empty", NL;
+	IF(two<one) THEN	WRITE two, "<", one, NL;	END;	WRITE " <== should be empty", NL;
+	IF(two<a) THEN		WRITE two, "<", a, NL;	END;	WRITE " <== should be empty", NL;
+	IF(b<one) THEN		WRITE b, "<", one, NL;	END;	WRITE " <== should be empty", NL;
+	IF(two<1) THEN		WRITE two, "<", 1, NL;	END;	WRITE " <== should be empty", NL;
+	IF(2<one) THEN		WRITE 2, "<", one, NL;	END;	WRITE " <== should be empty", NL;
+	IF(b<1) THEN		WRITE b, "<", 1, NL;	END;	WRITE " <== should be empty", NL;
+	IF(2<a) THEN		WRITE 2, "<", a, NL;	END;	WRITE " <== should be empty", NL;
+	
+	
+	WRITE NL, "*****PROCS/FUNCS - NO PARAMS*****", NL;
+	p1();	WRITE " == In p1", NL;
+	p2();	WRITE " == In p2", NL;
+	p3();	WRITE " == In p3", NL;
+	a := f1();	WRITE " == In f1", NL;
+	b := f2();	WRITE " == In f2", NL;
+	c := f3();	WRITE " == In f3", NL;
+	WRITE a, " == ", 1, NL;
+	WRITE b, " == ", 1, NL;
+	WRITE c, " == ", 1, NL;
+	WRITE ten()+ten()+ten()+ten()+ten()+ten()+ten()+ten()+ten(), " == ", 90, NL;
+	WRITE nine() + nine(), " == ", 18, NL;
+	WRITE eight() + eight(), " == ", 16, NL;
+	IF(1<2) THEN
+		x := 10;
+		doublex();
+		WRITE x;
+	END;
+	WRITE " == ", 20, NL;
+
+		
+END.

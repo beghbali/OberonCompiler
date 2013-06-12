@@ -1,0 +1,209 @@
+TYPE PR = 
+	POINTER TO RECORD
+		
+		x, y, z : INTEGER;
+		T, F , bool, b1, b2 : BOOLEAN;
+	
+		I : ARRAY 2 OF ARRAY 2 OF INTEGER;
+		AI : ARRAY 10 OF INTEGER;
+		AAAI : ARRAY 2 OF ARRAY 5 OF ARRAY 6 OF INTEGER;
+		AB : ARRAY 10 OF BOOLEAN;
+		AAAB : ARRAY 2 OF ARRAY 2 OF ARRAY 2 OF BOOLEAN;
+		
+	END;
+
+
+
+CONST one = 1;
+CONST two = ((1 + 2 * one - 1) * 2) DIV 2;
+CONST three = one + two;
+CONST string = "STRING CONSTANT";
+CONST true = ~~(TRUE & FALSE) OR ~~TRUE;
+CONST false = ~true;
+
+
+VAR x : INTEGER;
+
+
+
+
+PROCEDURE p1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN);
+BEGIN
+	x := y;
+	b1 := b2;
+END p1;
+
+PROCEDURE f1(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : INTEGER;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN x;	
+END f1;
+
+PROCEDURE f2(VAR x : INTEGER; y : INTEGER; VAR b1 : BOOLEAN; b2 : BOOLEAN) : BOOLEAN;
+BEGIN
+	x := y;
+	b1 := b2;
+	RETURN b1;
+END f2;
+
+PROCEDURE val(x : INTEGER) : INTEGER;
+BEGIN
+	RETURN x;
+END val;
+
+PROCEDURE recurse(x : INTEGER) : INTEGER;
+BEGIN
+	WRITE x, " ";
+	IF(x = 0) THEN
+		RETURN 0;
+	END;
+	IF(x > 0) THEN
+		RETURN recurse(x - 1);
+	END;
+	IF(x < 0) THEN
+		RETURN recurse(x + 1);
+	END;
+END recurse;
+
+
+VAR rec : PR;
+PROGRAM PHASEIIIc
+	
+BEGIN
+
+	NEW(rec);
+
+	WRITE NL, "*****ARRAYS*****", NL;
+
+	
+	rec.I[0][0] := 0;
+	rec.I[0][1] := 1;
+	rec.I[1][0] := 2;
+	rec.I[1][1] := 3;
+
+	rec.AAAI[0][0][0] := 111;
+	rec.AAAI[0][1][2] := 222;
+	rec.AAAI[0][2][3] := 333;
+	rec.AAAI[0][3][4] := 444;
+	rec.AAAI[0][4][5] := 555;
+
+	WRITE 1+rec.AAAI[0][rec.I[0][0]][rec.I[0][0]]*2+11, " == 234",NL;
+	WRITE rec.AAAI[0][rec.I[0][1]][rec.I[1][0]]+rec.AAAI[0][rec.I[0][1]][rec.I[1][0]], " == 444", NL;
+	WRITE rec.AAAI[0][rec.I[1][0]][rec.I[1][1]]+rec.AAAI[0][rec.I[1][0]][rec.I[1][1]], " == 666", NL;
+	WRITE rec.AAAI[0][rec.I[1][1]][4]+rec.AAAI[0][rec.I[1][1]][4], " == 888", NL;
+	WRITE rec.AAAI[0][4][5]+11+1, " == 567", NL;
+
+	rec.AAAB[0][0][0] := FALSE;
+	rec.AAAB[0][0][1] := TRUE;
+	rec.AAAB[0][1][0] := TRUE;
+	rec.AAAB[0][1][1] := FALSE;
+	rec.AAAB[1][0][0] := TRUE;
+	rec.AAAB[1][0][1] := FALSE;
+	rec.AAAB[1][1][0] := FALSE;
+	rec.AAAB[1][1][1] := FALSE;
+	
+	WRITE rec.AAAB[0][0][0], " == FALSE", NL;
+	WRITE rec.AAAB[0][0][1], " == TRUE", NL;
+	WRITE rec.AAAB[0][1][0], " == TRUE", NL;
+	WRITE rec.AAAB[0][1][1], " == FALSE", NL;
+	WRITE rec.AAAB[1][0][0], " == TRUE", NL;
+	WRITE rec.AAAB[1][0][1], " == FALSE", NL;
+	WRITE rec.AAAB[1][1][0], " == FALSE", NL;
+	WRITE rec.AAAB[1][1][1], " == FALSE", NL;
+
+
+
+
+	WRITE NL, "*****CONTROL STATEMENTS*****", NL;
+	rec.AI[2] := 0; rec.AAAI[1][2][3] := 5;
+	IF((rec.AI[2] # 0) & ((rec.AAAI[1][2][3] DIV rec.AI[2]) > 1)) THEN	WRITE "FAIL short circuit evaluation...", NL;
+	ELSE	WRITE "PASS short circuit evaluation...", NL;
+	END;
+	IF((rec.AI[2] = 0) OR ((rec.AAAI[1][2][3] DIV rec.AI[2]) > 1)) THEN	WRITE "PASS short circuit evaluation...", NL;
+	ELSE	WRITE "FAIL short circuit evaluation...", NL;
+	END;	
+
+	
+	rec.AI[2] := 0;
+	WHILE(rec.AI[2] <= 3) DO
+		WRITE rec.AI[2], " ";
+		rec.AI[2] := rec.AI[2] + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+
+	rec.AI[2] := 0;
+	WHILE(rec.AI[2] # 4) DO
+		WRITE rec.AI[2], " ";
+		rec.AI[2] := rec.AI[2] + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	
+	rec.AI[2] := 0;
+	WHILE(TRUE) DO
+		IF(rec.AI[2] = 4) THEN
+			EXIT;
+		END;
+		WRITE rec.AI[2], " ";
+		rec.AI[2] := rec.AI[2] + 1;
+	END;	WRITE " == 0 1 2 3", NL;
+	rec.AI[2] := 0; rec.AAAI[1][2][3] := 5;
+	WHILE((rec.AI[2] # 0) & ((rec.AAAI[1][2][3] DIV rec.AI[2]) > 1)) DO
+		(*Hope for no divide by 0 fault*)
+	END;
+	WHILE((rec.AI[2] = 0) OR ((rec.AAAI[1][2][3] DIV rec.AI[2]) < 0)) DO
+		rec.AI[2] := 1;
+		(*Hope for no divide by 0 fault*)
+	END;
+	rec.AI[2] := 2;
+	WHILE(TRUE) DO
+		WHILE(TRUE) DO
+			WHILE(TRUE) DO
+				IF(rec.AI[2] <= 0) THEN
+					EXIT;
+				ELSE
+					WRITE rec.AI[2], " ";
+					rec.AI[2] := rec.AI[2] - 1;
+				END;
+			END;
+			EXIT;
+		END;
+		IF(rec.AI[2] <= -3) THEN
+			EXIT;
+		ELSE
+			WRITE rec.AI[2], " ";
+			rec.AI[2] := rec.AI[2] - 1;
+		END;		
+	END;	WRITE " == 2 1 0 -1 -2", NL;
+	
+
+	
+	
+	
+	WRITE NL, "*****PROCS/FUNCS - W/ PARAMS*****", NL;
+	rec.AI[2] := 3; rec.AAAI[1][2][3] := 5; rec.AB[2] := FALSE; rec.AAAB[1][0][1] := TRUE;
+	
+	p1(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], rec.AAAB[1][0][1]); WRITE rec.AI[2], " == ", rec.AAAI[1][2][3], " AND ", rec.AB[2], " == ", rec.AAAB[1][0][1], " == ", "TRUE", NL;
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	WRITE f1(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], rec.AAAB[1][0][1]), " == ", rec.AAAI[1][2][3], " AND ", rec.AB[2], " == ", rec.AAAB[1][0][1], " == ", "TRUE", NL;
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	rec.bool := f2(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], rec.AAAB[1][0][1]); WRITE rec.AI[2], " == ", rec.AAAI[1][2][3], " AND ", rec.bool, " == ", rec.AAAB[1][0][1], " == ", "TRUE", NL;
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	WRITE f1(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], TRUE OR FALSE), " == ", rec.AAAI[1][2][3], " AND ", rec.AB[2], " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	rec.bool := f2(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], TRUE OR FALSE); WRITE rec.AI[2], " == ", rec.AAAI[1][2][3], " AND ", rec.bool, " == ", TRUE OR FALSE, " == ", "TRUE", NL;
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	WRITE f1(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], TRUE & FALSE), " == ", rec.AAAI[1][2][3], " AND ", rec.AB[2], " == ", TRUE & FALSE, " == ", "FALSE", NL;
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	rec.bool := f2(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], TRUE & FALSE); WRITE rec.AI[2], " == ", rec.AAAI[1][2][3], " AND ", rec.bool, " == ", TRUE & FALSE, " == ", "FALSE", NL;	
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	WRITE f1(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], 1 < 2), " == ", rec.AAAI[1][2][3], " AND ", rec.AB[2], " == ", 1 < 2, " == ", "TRUE", NL;
+	rec.AI[2] := 3; rec.AB[2] := FALSE;
+	rec.bool := f2(rec.AI[2], rec.AAAI[1][2][3], rec.AB[2], 1 < 2); WRITE rec.AI[2], " == ", rec.AAAI[1][2][3], " AND ", rec.bool, " == ", 1 < 2, " == ", "TRUE", NL;		
+
+	rec.AAAI[2][3][4] := 3;
+	recurse(rec.AAAI[2][3][4]);	WRITE " == 3 2 1 0", NL;
+	rec.AI[3] := 2;
+	rec.AAAI[2][rec.AAAI[2][3][4]][rec.AI[3]] := 5;
+	x := rec.AAAI[2][rec.AAAI[2][3][4]][rec.AI[3]];
+	WRITE val(rec.AAAI[2][rec.AAAI[2][3][4]][rec.AI[3]]+rec.AAAI[2][rec.AAAI[2][3][4]][rec.AI[3]]) + val(rec.AAAI[2][rec.AAAI[2][3][4]][rec.AI[3]]*2) + val(10) + val(10) + val(10), " == 50", NL;
+
+END.

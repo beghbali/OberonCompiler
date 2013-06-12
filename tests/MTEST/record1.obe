@@ -1,0 +1,45 @@
+
+TYPE PR = POINTER TO RECORD 
+	i : INTEGER; 
+	c : BOOLEAN; 
+	A : ARRAY 10 OF INTEGER; 
+	p : PR; 
+	END; 
+PROGRAM s15a
+  
+VAR v1 : POINTER TO RECORD
+			a : INTEGER;
+			b : INTEGER;
+			END;
+VAR rec : PR;
+VAR array : ARRAY 10 OF INTEGER;
+VAR test : INTEGER;
+BEGIN
+   NEW(v1);
+   NEW(rec);
+   v1.a := 5;
+   v1.b := 6;
+   rec.i := 3;
+  
+	WHILE rec.i < 10 DO 
+   		array[rec.i] := rec.i;
+    
+		WRITE "rec.i is : " ,rec.i ,"       ";
+		WRITE " array[i]:" ,  array[rec.i], NL;
+	
+		rec.i := rec.i + 1;
+	END;
+  	WRITE NL, "rec.i is : " ,rec.i ,NL, NL;
+	
+   
+   
+   rec.A[2] := 10;
+   test := rec.A[2];  
+   WRITE rec.A[2], NL;
+ 
+   test := v1.a + v1.b + rec.i + rec.A[2];
+   WRITE test, NL;
+    
+END.
+
+

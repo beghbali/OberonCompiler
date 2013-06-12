@@ -1,0 +1,28 @@
+
+VAR T : BOOLEAN;
+
+CONST t = FALSE;
+CONST f = FALSE;
+CONST A = 5;
+CONST STR ="HELLO";
+PROGRAM main
+VAR X,Y : INTEGER;
+
+BEGIN
+	T := t;
+  	WRITE "T is : " , T , NL;
+	X := A;
+	WRITE "X is : " , X , NL;	
+	WRITE NL ,NL;
+	WRITE "STR is : " , STR , NL;
+	WRITE "X + X is : " , X + X , NL;
+	Y := X - 10;					(* y = 5-10 = -5 *)
+	WRITE "Y is : " , Y , NL;
+	WRITE "Y*Y*Y is : " , Y*Y*Y , NL;
+	WRITE "t = f is : ", t=f ,NL;
+	WRITE "t # f is : ", t#f , NL;
+	WRITE "-Y is : " , -Y , NL;
+	WRITE "- X is: " , -X , NL;
+	WRITE "- A is: " , -A , NL;
+	WRITE "Y-5 is: " , Y-5 ,NL , NL; 
+END.

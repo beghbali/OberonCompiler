@@ -1,0 +1,28 @@
+(* 
+ * output - 25else case2
+*)
+PROCEDURE test (z : INTEGER);
+VAR a : INTEGER;
+VAR c, d : BOOLEAN;
+
+BEGIN
+		(* z := 3;    *)
+        WRITE z * z, NL;
+        c := TRUE;
+        d := FALSE;
+        IF (c & d) THEN
+                WRITE "you shouldnt be seeing this." , NL ;
+        ELSE
+                WRITE "else case" , NL ;
+        END;
+        a := 3;
+        WRITE z MOD a;
+END test;
+
+PROGRAM stest3
+VAR x : INTEGER;
+
+BEGIN
+        x := 5;
+      test(x);   
+END.

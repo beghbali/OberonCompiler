@@ -1,0 +1,77 @@
+PROCEDURE proc4(VAR x:INTEGER);
+ BEGIN
+	x := 78;
+END proc4;
+
+PROCEDURE proc2(VAR x:INTEGER);
+ BEGIN
+	x := 22;
+	proc4(x);
+END proc2;
+
+PROCEDURE proc3(x:INTEGER):INTEGER;
+ BEGIN
+	x := 34;
+	RETURN x;
+END proc3;
+
+PROCEDURE proc5(VAR x:INTEGER);
+ BEGIN
+	proc2(x);
+END proc5;
+
+PROCEDURE proc6(VAR x:INTEGER):BOOLEAN;
+VAR a, b, c, d, e:INTEGER; 
+VAR B:BOOLEAN;
+ BEGIN
+	a := 0;
+	b := 5;
+	c := 9;
+	d := 23;
+
+	(* should return true *)
+	B := TRUE;
+	WRITE "B = ", B, NL;
+	IF(5>3)THEN
+		WRITE "B = ", B, NL;
+	END;
+
+	B:=( ((b > a)&(b = 5)) OR ((c > a)&(c = 9)));
+	B:=( ((b > a)&(b = 5)) OR ((c > a)&(c = 9)));
+	B:=( ((b > a)&(b = 5)) OR ((c > a)&(c = 9)));
+	B:=( ((b > a)&(b = 5)) OR ((c > a)&(c = 9)));
+	WRITE "B= ", B, NL;
+	RETURN ( ((b > a)&(b = 5)) OR ((c > a)&(c = 9)));
+	
+END proc6;
+
+PROGRAM Test1
+VAR a, x, e, f: INTEGER;
+VAR arr : ARRAY 10 OF INTEGER;
+VAR bool : BOOLEAN; 
+VAR bool2 : BOOLEAN;
+
+BEGIN
+	e := 1;
+	arr[e] := 10;
+	a := proc3(arr[e]);
+	WRITE "arr[1] = ", arr[e], NL;	(* should write 10 *)
+	
+	proc5(arr[e]);
+	WRITE "arr[1] = ", arr[e], NL;	(* should write 78*)
+
+	WRITE "proc6 returns -> ", proc6(e), NL;
+
+
+	bool2 := TRUE;
+	WRITE "bool2 = ", bool2, NL;
+	IF(5>3)THEN
+		WRITE "bool2 = ", ~bool2, NL;
+	END;
+	
+	
+	WRITE "bool2 = ", bool2, NL;
+	
+
+
+END.

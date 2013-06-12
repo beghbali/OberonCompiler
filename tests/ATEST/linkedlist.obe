@@ -1,0 +1,162 @@
+TYPE Node = POINTER TO RECORD
+    element : INTEGER;
+    tail :  Node;
+END;
+
+TYPE tree = POINTER TO RECORD
+	element : INTEGER;
+	tr : tree;
+END;
+
+VAR count : INTEGER;
+VAR linkedlist : Node;
+VAR Tree : tree;
+
+
+
+PROGRAM LinkedList
+   BEGIN
+
+
+
+   NEW(linkedlist);
+   linkedlist.element := 88;
+   NEW(linkedlist.tail);
+   NEW( Tree ) ;
+	Tree.element :=58;
+   linkedlist.tail.element := 45;
+   NEW(linkedlist.tail.tail);
+   
+   linkedlist.tail.tail.element := 118;
+   linkedlist.tail.tail.tail := NIL;
+   linkedlist.tail.tail.tail.tail := NIL;
+   linkedlist.tail.tail.tail.tail.tail := NIL;
+   linkedlist.tail.tail.tail.tail.tail.tail := NIL;
+   linkedlist.tail.tail.tail.tail.tail.tail.tail := NIL;
+   linkedlist.tail.tail.tail.tail.tail.tail.tail.tail := NIL;
+ 
+   WRITE "linked list has been initialized as follows",NL;
+   WRITE "===========================================",NL;
+   WRITE "linkedlist element = ",linkedlist.element,NL;
+   WRITE "linkedlist.tail.element = ",linkedlist.tail.element,NL;
+   WRITE "linkedlist.tail.tail.element = ",linkedlist.tail.tail.element,NL;
+
+   WRITE "Now assign linkedlist to linkedlist.tail twice",NL;
+   
+   linkedlist := linkedlist.tail;
+   WRITE linkedlist.element,NL;
+   
+   linkedlist := linkedlist.tail;
+   WRITE linkedlist.element,NL;
+   
+   linkedlist := linkedlist.tail;
+   WRITE linkedlist.element,NL;
+
+
+   IF ( linkedlist.tail = NIL) THEN
+	WRITE "linkedlist = NIL",NL;
+   END;
+
+   WRITE "Now check the end of the list",NL;
+
+   IF(linkedlist.tail.tail.tail # NIL) THEN
+      WRITE "linkedlist.tail.tail.tail # NIL, = ",linkedlist.tail.tail.tail,NL;
+   ELSE
+      WRITE "linkedlist.tail.tail.tail = NIL",NL;
+   END;
+      
+
+   WRITE "[ linkedlist is ", linkedlist,"  ---";
+   WHILE (linkedlist # NIL) DO
+      WRITE linkedlist.element;
+      linkedlist := linkedlist.tail;
+      IF(linkedlist # NIL) THEN
+         WRITE ",";
+      END;
+   END;
+   WRITE "]",NL;
+
+   NEW(linkedlist);
+   IF(linkedlist = NIL) THEN
+      WRITE "linkedlist = NIL",NL;
+   ELSE
+      WRITE "linkedlist not equal to NIL",NL;
+   END;
+  
+   IF(linkedlist.tail = NIL) THEN
+      WRITE "linkedlist.tail = NIL",NL;
+   ELSE
+      WRITE "linkedlist.tail not equal to NIL",NL;
+   END;
+
+ 
+   IF(linkedlist = NIL) THEN
+      WRITE "linkedlist = NIL",NL;
+   ELSE
+      WRITE "linkedlist not equal to NIL",NL;
+   END;
+
+   IF(linkedlist.tail = NIL) THEN
+      WRITE "linkedlist.tail = NIL",NL;
+   ELSE
+      WRITE "linkedlist.tail not equal to NIL",NL;
+   END;
+
+
+
+(*
+PROCEDURE addNode(list : nodePtr; e : listType): nodePtr;
+  VAR n : nodePtr;
+   BEGIN
+      NEW(n);  n.head := NIL;  n.tail := NIL;
+      n.head := NIL;  n.tail := NIL;  n.element := e;
+      if(list = NIL) THEN
+         list.element = e;
+	 RETURN list;
+      END;
+      WHILE(list.tail # NIL) DO 
+         list := list.tail;
+      END;
+      list.tail := n;
+      RETURN list;
+   END addNode;
+
+
+PROCEDURE deleteNode(list : nodePtr; e : listType): nodePtr;
+   BEGIN
+      IF(list = NIL) THEN
+         WRITE "You are trying to delete a node from an empty list",NL;
+	 return list;
+      END;
+      IF(list.element = element) THEN
+         list := NIL;
+	 RETURN list;
+      END;
+      (* not deleting the first node, so check the other links *)
+      WHILE(list.tail.element # element) DO
+         list := list.tail;
+      END;
+      list.tail = NIL;
+      list := list.tail.tail;
+      RETURN list;
+   END addNode;
+
+
+PROCEDURE printList(list : nodePtr);
+   BEGIN
+      WRITE "list elements: [";
+      WHILE(list # NIL) DO
+         WRITE list.element;
+         list := list.tail;
+      END;
+      WRITE "]",NL;
+   END printList;
+*)
+
+
+
+
+
+
+   END.
+

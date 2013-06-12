@@ -1,0 +1,13 @@
+VAR x, y, z : INTEGER;  (* global x, y, z *) 
+
+PROCEDURE bar (z : INTEGER); (* z param masks global *) 
+BEGIN 
+  x := z + y;        (* get global x, y, local param z *) 
+END bar; 
+ 
+PROGRAM foo
+  VAR y : BOOLEAN;   (* local y, masks global *) 
+BEGIN 
+  y := TRUE;         (* get local  y *) 
+  x := x + 1;        (* get global x *) 
+END.

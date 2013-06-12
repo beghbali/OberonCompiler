@@ -1,0 +1,18 @@
+CONST p = TRUE;
+CONST q = 5 MOD 2;
+
+PROCEDURE constantKiller(a : INTEGER; b : BOOLEAN) : INTEGER;
+CONST k = TRUE;
+VAR bb : BOOLEAN;
+CONST kp = TRUE & (k OR ~(k & TRUE));
+VAR xx : INTEGER;
+BEGIN
+	bb := kp OR (k & b);
+	xx := a;
+	RETURN xx*xx;
+END constantKiller;
+
+PROGRAM main
+BEGIN
+	WRITE "returned=",constantKiller(q,p),NL;
+END.

@@ -1,0 +1,72 @@
+PROGRAM main
+VAR	iarray : ARRAY 10 OF INTEGER;
+	barray : ARRAY 5 OF BOOLEAN;
+	i2array: ARRAY 10 OF ARRAY 9 OF INTEGER;
+	b2array: ARRAY 2 OF ARRAY 3 OF BOOLEAN;
+	i3array: ARRAY 2 OF ARRAY 3 OF ARRAY 4 OF INTEGER;
+	i,j,k  : INTEGER;
+	b      : BOOLEAN;
+BEGIN
+i := 0;
+j := 0;
+k := 0;
+(*integer arrays*)
+
+WHILE i < 10 DO
+	iarray[i] := i;
+	WRITE "iarray[",i,"]=",iarray[i],NL;
+	i := i + 1;
+END;
+
+i := 0;
+WHILE i < 10 DO
+	j := 0;
+	WHILE j < 9 DO
+		i2array[i][j] := i*j;
+		WRITE "i2array[",i,"][",j,"]=",i2array[i][j],NL;
+		j := j + 1;
+	END;
+	i := i + 1;
+END;
+
+i := 0;
+j := 0;
+
+WHILE i < 2 DO
+	j:= 0;
+	WHILE j < 3 DO
+		k := 0;
+		WHILE k < 4 DO
+			i3array[i][j][k] := i*j*k;
+			WRITE "i3array[",i,"][",j,"][",k,"]=",i3array[i][j][k],NL;
+			k := k + 1;
+		END;
+		j := j + 1;
+	END;
+	i := i + 1;
+END;
+
+(*boolean arrays*)
+b := TRUE;
+i := 0;
+WHILE i < 5 DO
+	barray[i] := b;
+	b := ~b;
+	WRITE "barray[",i,"]=",barray[i],NL;
+	i := i + 1;
+END;
+
+b := TRUE;
+i := 0;
+WHILE i < 2 DO
+	j := 0;
+	WHILE j < 3 DO
+		b2array[i][j] := b;
+		b := ~b;
+		WRITE "b2array[",i,"][",j,"]=",b2array[i][j],NL;
+		j := j + 1;
+	END;
+	i := i + 1;
+END;
+
+END.

@@ -1,0 +1,57 @@
+
+TYPE Stack = 
+	POINTER TO RECORD
+		stk : ARRAY 100 OF INTEGER;
+		size : INTEGER;
+	END;
+	
+	
+
+PROCEDURE (S : Stack) pop();
+BEGIN
+	S.size := S.size - 1;
+END pop;
+
+
+PROCEDURE (S : Stack) push(val : INTEGER);
+BEGIN
+	S.stk[S.size] := val;
+	S.size := S.size + 1;
+END push;
+
+
+PROCEDURE (S : Stack) init();
+BEGIN
+	S.size := 0;
+END init;
+
+
+PROCEDURE (S : Stack) dump();
+	VAR i : INTEGER;
+BEGIN
+	
+	WHILE(S.size > 0) DO
+		WRITE "popping index ", S.size - 1, " : ";
+		WRITE S.stk[S.size - 1], NL;
+		S.pop();
+	END;
+END dump;
+
+
+
+
+PROGRAM MAIN
+	VAR stack : Stack;
+BEGIN
+	NEW(stack);
+	
+	stack.init();
+	
+	stack.push(1);
+	stack.push(2);
+	stack.push(3);
+	stack.push(4);
+	stack.push(5);
+	
+	stack.dump();
+END.

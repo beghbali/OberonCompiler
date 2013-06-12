@@ -1,0 +1,89 @@
+TYPE arr = ARRAY 10 OF INTEGER;
+
+
+PROCEDURE exchange(VAR x, y : INTEGER);
+	VAR temp : INTEGER;
+BEGIN
+	temp := x;
+	x := y;
+	y := temp;
+END exchange;
+
+
+
+PROCEDURE split(VAR A : arr; low, high : INTEGER) : INTEGER;
+	VAR i, j : INTEGER;
+	VAR item : INTEGER;
+	VAR point : INTEGER;
+BEGIN
+
+	item := A[low];
+	j := low;
+	i := low + 1;
+	WHILE(i <= high) DO
+		IF(A[i] < item) THEN
+			j := j+1;		
+			exchange(A[i], A[j]);
+		END;
+		i := i+1;
+	END;
+	point := j;
+	exchange(A[low], A[point]);
+	RETURN point;
+	
+END split;
+
+
+PROCEDURE quicksort(VAR A : arr; low, high : INTEGER);
+	VAR mid : INTEGER;
+	VAR i : INTEGER;
+BEGIN
+
+	i :=0;
+	WRITE "QUICKSORTING:  ";
+	WHILE(i < 10) DO
+		WRITE A[i], ", ";
+		i := i+1;
+	END;
+	WRITE NL;
+
+
+	IF low < high THEN
+		mid := split(A, low, high);
+		quicksort(A, low, mid - 1);
+		quicksort(A, mid+1, high);
+	END;
+	
+END quicksort;
+
+
+
+
+
+PROGRAM SORT
+	VAR A : arr;
+	VAR i : INTEGER;
+BEGIN
+	
+	A[0] := 4;
+	A[1] := 3;
+	A[2] := 6;
+	A[3] := 9;
+	A[4] := 7;
+	A[5] := 0;
+	A[6] := 8;
+	A[7] := 1;
+	A[8] := 5;
+	A[9] := 2;
+		
+	quicksort(A, 0, 9);
+	
+	i :=0;
+	WRITE "Result: ";
+	WHILE(i < 10) DO
+		WRITE A[i], " ";
+		i := i+1;
+	END;
+	WRITE NL;
+		
+END.

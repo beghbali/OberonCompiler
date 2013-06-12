@@ -1,0 +1,97 @@
+TYPE BOOLARRAY = ARRAY 5 OF ARRAY 3 OF BOOLEAN;
+
+PROCEDURE bool1(VAR arr : BOOLARRAY;VAR x : BOOLEAN) : BOOLEAN;
+VAR i,j : INTEGER;
+BEGIN
+i := 0;
+WHILE i < 5 DO
+	j := 0;
+	WHILE j < 3 DO
+		arr[i][j] := x;
+		j := j+1;
+	END;
+	i := i+1;
+END;
+x := TRUE;
+RETURN x;
+END bool1;
+
+
+PROCEDURE bool2(VAR arr : BOOLARRAY; x : BOOLEAN) : BOOLEAN;
+VAR i,j : INTEGER;
+BEGIN
+i := 0;
+WHILE i < 5 DO
+	j := 0;
+	WHILE j < 3 DO
+		arr[i][j] := x;
+		j := j+1;
+	END;
+	i := i+1;
+END;
+x := TRUE;
+RETURN x;
+END bool2;
+
+PROCEDURE bool3(VAR arr : BOOLARRAY; VAR x : BOOLEAN) : BOOLEAN;
+BEGIN
+	RETURN bool1(arr, x);
+END bool3;
+
+PROCEDURE printarr(VAR arr: BOOLARRAY);
+VAR i,j : INTEGER;
+BEGIN
+i := 0;
+WHILE i < 5 DO
+	j := 0;
+	WHILE j < 3 DO
+		WRITE arr[i][j], " ";
+		j := j+1;
+	END;
+	i := i + 1;
+END;
+END printarr;
+
+PROGRAM main
+VAR arr1, arr2, arr3 : BOOLARRAY;
+VAR i,j : INTEGER;
+VAR b : BOOLEAN;
+BEGIN
+
+i := 0;
+b := TRUE;
+WHILE i < 5 DO
+	j := 0;
+	WHILE j < 3 DO
+		arr1[i][j] := b & ((j>0) & ((i MOD j) > 0));
+		arr2[i][j] := arr1[i][j];
+		arr3[i][j] := arr2[i][j];
+		j := j+1;
+	END;
+	i := i+1;
+END;
+
+WRITE "arr1:",NL;
+printarr(arr1);
+WRITE NL,"arr2:",NL;
+printarr(arr2);
+WRITE NL,"arr3:",NL;
+printarr(arr3);
+WRITE NL,NL;
+
+b := bool1(arr1, arr1[0][0]);
+WRITE "b = ", b,NL;
+printarr(arr1);
+WRITE NL,NL;
+
+b := bool2(arr2, arr2[0][0]);
+WRITE "b = ", b,NL;
+printarr(arr2);
+WRITE NL,NL; 
+
+b := bool3(arr3, arr3[0][0]);
+WRITE "b = ", b,NL;
+printarr(arr3);
+WRITE NL,NL; 
+
+END.

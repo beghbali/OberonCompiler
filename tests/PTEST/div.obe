@@ -1,0 +1,21 @@
+VAR x : INTEGER;
+
+
+PROGRAM guess
+	VAR a, b : INTEGER;
+BEGIN
+	WHILE(TRUE) DO
+		WRITE "Will perform a DIV b, a is evenly divisible by b", NL;
+		WRITE "Enter a: ";
+		READ a;
+		WRITE "Enter b: ";
+		READ b;
+	
+		IF((b # 0) & ((a MOD b) = 0)) THEN
+			WRITE a, " DIV ",b ," = ", a DIV b, NL;
+		ELSE
+			WRITE "Error with expression", NL;
+		END;
+		WRITE NL;
+	END;
+END.
